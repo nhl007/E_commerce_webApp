@@ -7,9 +7,15 @@ const connectDatabase = () => {
       useUnifiedTopology: true,
     })
     .then((con) => {
-      console.log(
-        `Connected to MongoDB with Host: ${con.connection.host}:${con.connection.port}`
-      );
+      const env = process.env.NODE_ENV;
+      if (env.match('DEVELOPMENT')) {
+        console.log(
+          `Connected to MongoDB with Host: ${con.connection.host}:${con.connection.port}`
+        );
+      }
+      if (env.match('PRODUCTION')) {
+        console.log('Connected to MongoDB in Production environment');
+      }
     })
     .catch((error) => {
       console.log(error);

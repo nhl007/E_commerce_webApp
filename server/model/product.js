@@ -11,7 +11,7 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'Please enter product price'],
     maxLength: [5, 'Product price can not exceed 5 digits'],
-    default: 0.0,
+    default: 0,
   },
   description: {
     type: String,

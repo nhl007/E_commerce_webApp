@@ -4,6 +4,10 @@ const cors = require('cors');
 
 //! import rooutes
 const products = require('./routes/product');
+const auth = require('./routes/auth');
+
+//! import middlewares
+const ErrorHandler = require('./middleware/errors');
 
 //! app
 const app = express();
@@ -18,5 +22,10 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1', products);
+app.use('/api/v1', auth);
+
+//!error handler middlewares
+
+app.use(ErrorHandler);
 
 module.exports = app;

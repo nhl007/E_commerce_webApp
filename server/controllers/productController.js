@@ -1,46 +1,53 @@
 const Product = require('../model/product');
 
+const ErrorHandler = require('../utils/errorHandler');
+const apiFeatures = require('../utils/apiFeatures');
+
+const catchAsyncErrors = require('../middleware/catchAsyncErrors');
+
 //! create a new Product
-exports.newProduct = async (req, res, next) => {
+exports.newProduct = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.create(req.body);
 
   return res.status(201).json({ success: true, product });
-};
+});
 
 //! get all products from database
-exports.getProducts = async (req, res, next) => {
+exports.getProducts = catchAsyncErrors(async (req, res, next) => {
   // Product.find()
   //   .then((products) =>
   //     res.status(200).json({ success: true, count: products.length, products })
   //   )
   //   .catch((err) => next(err));
+  const prouctPerPage = 2;
 
-  const products = await Product.find();
+  const feature = new apiFeatures(Product.find(), req.query)
+    .search()
+    .filter()
+    .pagination(prouctPerPage);
+
+  const products = await feature.query;
 
   res.status(200).json({
     success: true,
     totalProducts: products.length,
     products,
   });
-};
-
+});
 //! get a single product from database
 
-exports.getSingleProduct = async (req, res, next) => {
+exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findOne({ _id: req.params.id });
 
   if (!product) {
-    return res
-      .status(404)
-      .json({ success: false, message: 'Product not found' });
+    return next(new ErrorHandler('Product not found', 404));
   }
 
   return res.status(200).json({ success: true, product });
-};
-
+});
 //! update a product with the specified id
 
-exports.updateProduct = async (req, res, next) => {
+exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findOneAndUpdate(
     { _id: req.params.id },
     req.body,
@@ -50,11 +57,11 @@ exports.updateProduct = async (req, res, next) => {
     success: true,
     product,
   });
-};
+});
 
 //! delete a product with the specified id
 
-exports.deleteProduct = async (req, res, next) => {
+exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById({ _id: req.params.id });
 
   if (!product) {
@@ -70,4 +77,4 @@ exports.deleteProduct = async (req, res, next) => {
     message: 'Product deleted successfully',
     product,
   });
-};
+});
