@@ -1,25 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useFeatureContext } from './contexts/features/featureContext';
+import { Loading } from './components';
+
+import Dashboard from './pages/Dashboard';
+import { HomePage, Orders, SignIn, Register } from './pages';
+import Auth from './pages/Authentication/authRoute';
 
 function App() {
+  const { isloading } = useFeatureContext();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {isloading && <Loading />}
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Dashboard />}>
+            <Route index element={<HomePage />} />
+            <Route
+              path='/orders'
+              element={
+                <Auth>
+                  <Orders />
+                </Auth>
+              }
+            />
+          </Route>
+
+          <Route path='/sign_in' element={<SignIn />} />
+          <Route path='/registration' element={<Register />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
