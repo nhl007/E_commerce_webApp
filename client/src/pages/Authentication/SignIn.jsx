@@ -1,13 +1,22 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../contexts/authContext/authContext';
 import FormModel from './FormModel';
 
 const SignIn = () => {
+  const { token, authSetup } = useAuthContext();
   const navigate = useNavigate();
-  const onSubmit = (e, msg) => {
+
+  useEffect(() => {
+    if (token) {
+      navigate('/');
+    }
+  }, [token, navigate]);
+
+  const onSubmit = async (e, values) => {
     e.preventDefault();
-    console.log('submitted from sign in', msg);
-    navigate('/');
+    await authSetup('signin', values, 'Successfully Signed In');
   };
   return (
     <>

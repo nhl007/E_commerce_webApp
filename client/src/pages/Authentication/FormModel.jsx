@@ -1,13 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Alert } from '../../components';
 import { useFeatureContext } from '../../contexts/features/featureContext';
 
 // const formData = {};
 
 const FormModel = ({ type, onclick, navigate }) => {
-  const { showAlert } = useFeatureContext();
+  const { displayAlert } = useFeatureContext();
   const [values, setValues] = useState({
     name: '',
     email: '',
@@ -19,11 +18,34 @@ const FormModel = ({ type, onclick, navigate }) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
   const onSubmit = (e) => {
-    onclick(e, values);
+    e.preventDefault();
+    if (type === 'register') {
+      if (
+        values.password !== values.passwordAgain ||
+        !values.password ||
+        !values.passwordAgain ||
+        !values.email ||
+        !values.name
+      ) {
+        displayAlert('Error Occured ! Please enter the values properly', false);
+        return;
+      }
+      onclick(e, values);
+    } else {
+      if (!values.password || !values.email) {
+        displayAlert('Error Occured ! Please enter the values properly', false);
+        return;
+      }
+      const data = {
+        email: values.email,
+        password: values.password,
+      };
+      onclick(e, data);
+    }
   };
+
   return (
     <div className=' w-[full] h-[100%] flex flex-col justify-center items-center p-[50px] '>
-      {showAlert ? <Alert /> : ''}
       <div className='flex flex-col justify-center items-center bg-slate-500 p-6 rounded-md shadow-2xl'>
         <div>
           <Link to='/'>

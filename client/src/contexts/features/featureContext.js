@@ -3,7 +3,6 @@ import { DISPLAY_ALERT, CLEAR_ALERT, SET_IS_LOADING } from './actions';
 import reducer from './reducer';
 
 const initialState = {
-  isUser: false,
   alertText: '',
   showAlert: false,
   alertType: false,

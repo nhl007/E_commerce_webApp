@@ -6,9 +6,12 @@ import { useFeatureContext } from '../features/featureContext';
 
 const AuthContext = React.createContext();
 
+const token = localStorage.getItem('token');
+const user = localStorage.getItem('user');
+
 const initialState = {
-  token: null,
-  user: {},
+  token: token ? token : null,
+  user: user ? user : {},
 };
 const AuthProvider = ({ children }) => {
   const { setIsLoading, displayAlert } = useFeatureContext();
@@ -19,16 +22,16 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem('user', JSON.stringify(user));
   };
 
-  // const removeLocalStorage = () => {
-  //   localStorage.removeItem('token');
-  //   localStorage.removeItem('user');
-  // };
+  const removeLocalStorage = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  };
 
-  const register = async (values) => {
+  const authSetup = async (domain, values, message) => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        'http://localhost:4000/api/v1/register',
+        `http://localhost:4000/api/v1/${domain}`,
         values
       );
 
@@ -42,7 +45,7 @@ const AuthProvider = ({ children }) => {
         },
       });
       setIsLoading(false);
-      displayAlert('Successfully created the account !', true);
+      displayAlert(message, true);
     } catch (error) {
       // console.log(error);
       setIsLoading(false);
@@ -52,15 +55,19 @@ const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
+      setIsLoading(true);
       const response = await axios.get('http://localhost:4000/api/v1/logout');
-      console.log(response.data);
+      removeLocalStorage();
+      setIsLoading(false);
+      displayAlert(response.data.message, true);
     } catch (error) {
-      console.log(error);
+      setIsLoading(false);
+      displayAlert(error.response.data.message, false);
     }
   };
 
   return (
-    <AuthContext.Provider value={{ ...state, register, logout }}>
+    <AuthContext.Provider value={{ ...state, authSetup, logout }}>
       {children}
     </AuthContext.Provider>
   );

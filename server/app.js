@@ -6,6 +6,7 @@ const cookie_parser = require('cookie-parser');
 //! import rooutes
 const products = require('./routes/product');
 const auth = require('./routes/auth');
+const orders = require('./routes/order');
 
 //! import middlewares
 const ErrorHandler = require('./middleware/errors');
@@ -20,11 +21,16 @@ app.use(cookie_parser());
 
 //!routes
 app.get('/', (req, res) => {
-  res.send('hello from simple server :)');
+  res.send({
+    projectName: 'E_Commerce_',
+    Author: 'Nihal',
+    message: 'hello from the server :',
+  });
 });
 
 app.use('/api/v1', products);
 app.use('/api/v1', auth);
+app.use('/api/v1', orders);
 
 //!error handler middlewares
 
