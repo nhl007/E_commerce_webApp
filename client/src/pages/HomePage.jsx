@@ -1,9 +1,10 @@
 import React from 'react';
+import { Card } from '../components';
 
 const HomePage = () => {
   return (
-    <div className='flex justify-center items-center'>
-      <p>HomePage</p>
+    <div className=' p-10'>
+      <Card />
     </div>
   );
 };

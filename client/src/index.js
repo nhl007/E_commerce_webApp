@@ -7,13 +7,16 @@ import reportWebVitals from './reportWebVitals';
 
 import { FeatureProvider } from './contexts/features/featureContext';
 import { AuthProvider } from './contexts/authContext/authContext';
+import { ProductProvider } from './contexts/products/productContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <FeatureProvider>
       <AuthProvider>
-        <App />
+        <ProductProvider>
+          <App />
+        </ProductProvider>
       </AuthProvider>
     </FeatureProvider>
   </React.StrictMode>

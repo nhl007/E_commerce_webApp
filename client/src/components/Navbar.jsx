@@ -6,8 +6,8 @@ const Navbar = () => {
   const { token, logout } = useAuthContext();
   const navigate = useNavigate();
   return (
-    <>
-      <div className=' flex flex-row justify-between bg-primary text-teal-50 py-2 px-8 items-center'>
+    <nav>
+      <div className=' flex flex-row justify-between bg-primary text-teal-50 py-2 px-8 items-center '>
         <h1 className=' tracking-[10px]'>GGT</h1>
         <div className=' flex flex-row  justify-between gap-4'>
           <div className=' flex gap-4 items-center flex-shrink-0'>
@@ -90,7 +90,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-    </>
+    </nav>
   );
 };
 

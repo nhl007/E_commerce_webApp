@@ -1,4 +1,5 @@
 import Navbar from './Navbar';
 import Loading from './Loading';
 import Alert from './Alert';
-export { Navbar, Loading, Alert };
+import Card from './Card';
+export { Navbar, Loading, Alert, Card };

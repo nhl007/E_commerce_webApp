@@ -7,6 +7,9 @@ const Dashboard = () => {
     <div>
       <Navbar />
       <Outlet />
+      <footer className=' mt-5 flex justify-center'>
+        <p>Made by Nihal</p>
+      </footer>
     </div>
   );
 };
