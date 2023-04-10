@@ -2,7 +2,7 @@ const ErrorHandler = require('../utils/errorHandler');
 
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
-  err.message = err.message || 'Enternal server error';
+  err.message = err.message || 'Enteral server error';
 
   if (process.env.NODE_ENV.trim() === 'DEVELOPMENT') {
     res.status(err.statusCode).json({
@@ -12,6 +12,7 @@ module.exports = (err, req, res, next) => {
       error_stack: err.stack,
     });
   }
+
   if (process.env.NODE_ENV.trim() === 'PRODUCTION') {
     let error = { ...err };
     error.message = err.message;

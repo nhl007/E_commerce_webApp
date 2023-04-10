@@ -112,7 +112,7 @@ const resetPassword = catchAsyncErrors(async (req, res, next) => {
   }
 
   if (req.body.password !== req.body.passwordConfirm) {
-    return next(new errorHandler('Passwords doesnt match', 400));
+    return next(new errorHandler('Passwords do not match', 400));
   }
 
   user.password = req.body.password;

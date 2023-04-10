@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 
 const catchAsyncErrors = require('./catchAsyncErrors');
-const errorHandler = require('../utils/errorHandler');
 const User = require('../model/users');
 const ErrorHandler = require('../utils/errorHandler');
 
@@ -10,7 +9,7 @@ const protectRoutes = catchAsyncErrors(async (req, res, next) => {
 
   if (!token) {
     return next(
-      new errorHandler('You are not allowed to access this route', 404)
+      new ErrorHandler('You are not allowed to access this route', 404)
     );
   }
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
