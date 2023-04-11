@@ -1,15 +1,17 @@
 import axios from 'axios';
-import React, { useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { useContext } from 'react';
 import reducer from './reducer';
 import { ADD_TO_CART, SET_ALL_PRODUCTS } from './actions';
 
 const productContext = React.createContext();
 
+const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
 const initialState = {
   products: [],
-  cart: [],
-  totalCartProducts: 0,
+  cart: cart ? cart : [],
+  totalCartProducts: cart.length ? cart.length : 0,
   totalProducts: 0,
   totalPage: 0,
   currentPage: 0,
@@ -20,14 +22,29 @@ const ProductProvider = ({ children }) => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const addToCart = (_id) => {
-    dispatch({
-      type: ADD_TO_CART,
-      payload: {
-        id: _id,
-        total: ++state.totalCartProducts,
-      },
-    });
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(state.cart));
+  }, [state.cart]);
+
+  const removeLocalStorage = () => {
+    localStorage.removeItem('cart');
+  };
+  const addToCart = (id) => {
+    axios
+      .get(`${apiUrl}/product/${id}`)
+      .then((data) => {
+        const product = data.data.product;
+        dispatch({
+          type: ADD_TO_CART,
+          payload: {
+            product: product,
+            total: ++state.totalCartProducts,
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const getAllProducts = () => {

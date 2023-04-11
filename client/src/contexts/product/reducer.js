@@ -10,7 +10,7 @@ const reducer = (state, action) => {
   } else if (action.type === ADD_TO_CART) {
     return {
       ...state,
-      cart: [...state.cart, action.payload.id],
+      cart: [...state.cart, action.payload.product],
       totalCartProducts: action.payload.total,
     };
   }

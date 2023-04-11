@@ -8,11 +8,20 @@ const Card = ({ image, heading, description, price, background, id }) => {
   const { addToCart, cart } = useProductContext();
   const { showAlert, displayAlert } = useFeatureContext();
   const addTOCart = () => {
-    if (cart.includes(id)) {
-      //!todo
-      displayAlert('The item is already in the cart!', false);
-    } else {
+    if (!cart.length) {
       addToCart(id);
+    } else {
+      let isSaved = false;
+      cart?.map((item) => {
+        if (item._id === id) {
+          isSaved = true;
+        }
+      });
+      if (!isSaved) {
+        addToCart(id);
+      } else {
+        displayAlert('The item is already in the cart!', false);
+      }
     }
   };
   return (
@@ -22,10 +31,14 @@ const Card = ({ image, heading, description, price, background, id }) => {
       } `}
     >
       {showAlert && <Alert />}
-      <h1 className=' font-clash600 text-[20px] leading-[30px]'>{heading}</h1>
+      <h1 className='w-full text-ellipsis whitespace-nowrap overflow-hidden font-clash600 text-[20px] leading-[30px]'>
+        {heading}
+      </h1>
       <div className=' h-[108px] flex items-end mt-[12px]'>
         <div className='absolute bottom-4 flex flex-col gap-4'>
-          <p className=' w-[115px] text-[11px] leading-[14px]'>{description}</p>
+          <p className=' w-[115px] text-[11px] leading-[14px] '>
+            {description}
+          </p>
 
           <h1 className='font-clash600 text-[24px] leading-[30px]'>
             {price} $
