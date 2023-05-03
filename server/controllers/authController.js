@@ -47,7 +47,7 @@ const signInUser = catchAsyncErrors(async (req, res, next) => {
   //     success: true,
   //     token,
   //   });
-  sendToken(user, res, 201);
+  sendToken(user, res, 200);
 });
 
 //! logout users

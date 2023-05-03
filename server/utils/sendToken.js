@@ -1,13 +1,13 @@
 const sendToken = (user, res, statusCode) => {
   const token = user.getJwtToken();
-
+  const sevenDay = 7 * 1000 * 60 * 60 * 24;
   const cookieOptions = {
-    expires: new Date(
-      Date.now() + process.env.COOKIE_EXPIRATION_TIME * 24 * 60 * 60 * 1000
-    ),
+    httpOnly: true,
+    maxAge: sevenDay,
+    sameSite: 'Strict',
   };
-
-  res.status(statusCode).cookie('token', token, cookieOptions).json({
+  res.cookie('token', token, cookieOptions);
+  res.status(statusCode).json({
     success: true,
     token,
     user,

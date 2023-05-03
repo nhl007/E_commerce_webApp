@@ -17,7 +17,7 @@ const { protectRoutes, authorizeRole } = require('../middleware/auth');
 
 router.route('/register').post(registerUser);
 
-router.route('/signin').post(signInUser);
+router.route('/sign-in').post(signInUser);
 router.route('/logout').get(logoutUser);
 router.route('/password/forgot').post(forgetPassword);
 router.route('/reset/:token').put(resetPassword);

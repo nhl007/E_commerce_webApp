@@ -5,14 +5,13 @@ import {
   UPDATE_PAGE_NAME,
   SET_IS_LOADING,
   IS_SUPER_ADMIN,
-  SET_SIGNATURE_IMAGE,
 } from './actions';
 import reducer from './reducer';
 
 const initialState = {
   pagename: '',
   showAlert: false,
-  alertText: ' ',
+  alertText: '',
   alertType: false,
   isloading: false,
   superAdmin: false,
@@ -24,7 +23,7 @@ const FeatureContext = React.createContext();
 const FeatureProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const displayAlert = (alertText, alertIsSuccess) => {
+  const displayAlert = (alertText, alertIsSuccess = true) => {
     dispatch({
       type: DISPLAY_ALERT,
       payload: alertText,
@@ -49,9 +48,6 @@ const FeatureProvider = ({ children }) => {
   const isSuperAdmin = (superAdmin) => {
     dispatch({ type: IS_SUPER_ADMIN, payload: superAdmin });
   };
-  const setSignatureImage = (image) => {
-    dispatch({ type: SET_SIGNATURE_IMAGE, payload: image });
-  };
   return (
     <FeatureContext.Provider
       value={{
@@ -60,7 +56,6 @@ const FeatureProvider = ({ children }) => {
         updatePageName,
         setIsLoading,
         isSuperAdmin,
-        setSignatureImage,
       }}
     >
       {children}

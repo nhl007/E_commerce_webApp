@@ -4,10 +4,7 @@ import { adPhone, headphone } from '../../../assets';
 import { useProductContext } from '../../../contexts/product/productContext';
 
 const AllProducts = () => {
-  const { products, getAllProducts } = useProductContext();
-  useEffect(() => {
-    getAllProducts();
-  }, []);
+  const { products } = useProductContext();
 
   return (
     <section>

@@ -11,8 +11,8 @@ const reducer = (state, action) => {
   if (action.type === DISPLAY_ALERT) {
     return {
       ...state,
-      alertType: action.green ? true : false,
       showAlert: true,
+      alertType: action.green ? true : false,
       alertText: action.payload,
     };
   }

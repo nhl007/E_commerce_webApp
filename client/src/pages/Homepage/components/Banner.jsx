@@ -4,8 +4,8 @@ import { phone } from '../../../assets';
 
 const Banner = () => {
   return (
-    <div className='ml-[-8rem] lg:ml-[-3rem] px-[8rem] w-[100vw] h-[251px] mt-[94px] bg-greyBg flex justify-center mb-[80px]'>
-      <div className='flex justify-between w-full relative'>
+    <div className='ml-[-12rem] lg:ml-[-3rem] px-[12rem] w-[100vw] h-[251px] mt-[94px] bg-greyBg flex justify-center mb-[80px]'>
+      <div className='flex w-full relative'>
         <div className=' flex flex-col pt-8'>
           <h1 className='font-clash600 text-[48px] leading-[59px] text-font1 mb-4'>
             Samsung S22 Ultra

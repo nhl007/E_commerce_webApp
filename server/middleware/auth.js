@@ -19,12 +19,13 @@ const protectRoutes = catchAsyncErrors(async (req, res, next) => {
 
 const authorizeRole = (...roles) => {
   return (req, res, next) => {
-    if (!roles.includes(req.user.roles))
+    if (!roles.includes(req.user.roles)) {
       return next(
         new ErrorHandler(
           `Role (${req.user.roles}) does not have access to this route`
         )
       );
+    }
     next();
   };
 };

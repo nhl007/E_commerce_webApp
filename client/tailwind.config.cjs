@@ -16,6 +16,7 @@ module.exports = {
       font5: '#7D8398',
       fontRed: '#DE2D14',
     },
+
     fontFamily: {
       clash400: ['ClashGrotesk-Regular', 'sans-serif'],
       clash500: ['ClashGrotesk-Medium', 'sans-serif'],

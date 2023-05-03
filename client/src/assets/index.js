@@ -24,9 +24,11 @@ import moneyIcon from './icons/money.svg';
 import searchIcon from './icons/search.svg';
 import supportIcon from './icons/support.svg';
 import mailIcon from './icons/mailIcon.svg';
+import orderIcon from './icons/order.svg';
 
 export {
   hero,
+  orderIcon,
   controller,
   headphone,
   favIcon,

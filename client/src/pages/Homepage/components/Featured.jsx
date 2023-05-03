@@ -1,9 +1,11 @@
 import React from 'react';
-import { featured, jbl, phone, tv } from '../../../assets';
+import { featured, jbl, tv } from '../../../assets';
 import ButtonGreen from '../../../components/ButtonGreen';
 import CardBig from './CardBig';
+import { percentageCal } from '../../../utils/mathOperations';
 
 const Featured = () => {
+  const percentage = percentageCal(14, 20) + '%';
   return (
     <section className='flex mt-[68px]'>
       <div className='h-[532px] w-[364px] bg-whiteBg __shadow rounded-[10px] p-[32px] pt-[96px] mr-[30px] flex '>
@@ -28,8 +30,13 @@ const Featured = () => {
             <p className=''>Available: 20</p>
           </div>
           <div className='mt-[18px] relative flex items-center'>
-            <div className='absolute w-[358px] h-[5px] bg-[#D9D9D9]'></div>
-            <div className=' absolute max-w-[358px] w-[150px] h-[10px] bg-green2 rounded-[15px]'></div>
+            <div className='absolute w-full h-[5px] bg-[#D9D9D9]'></div>
+            <div
+              style={{
+                width: `${percentage}`,
+              }}
+              className={`absolute h-[5px] bg-green2 rounded-[15px]`}
+            ></div>
           </div>
         </div>
         <div className=' w-[110px]'>

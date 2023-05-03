@@ -1,0 +1,13 @@
+{
+  "name": "e_commerce_webapp",
+  "version": "1.0.0",
+  "description": "Designed by Sadzan Rahin and developed by Asif Nihal",
+  "scripts": {
+    "server": "npm start --prefix server",
+    "client": "npm run dev --prefix client",
+    "start": "concurrently --kill-others-on-fail \" npm run server\" \" npm run client\""
+  },
+  "keywords": [],
+  "author": "Asif Nihal",
+  "license": "ISC"
+}

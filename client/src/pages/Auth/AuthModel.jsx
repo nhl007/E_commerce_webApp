@@ -1,39 +1,58 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { signin } from '../../assets';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/auth/AuthContext';
+import { useFeatureContext } from '../../contexts/feature/FeatureContext';
+import Alert from '../../components/Alert';
 
 const AuthModel = ({ type }) => {
+  const navigate = useNavigate();
+  const { showAlert, displayAlert } = useFeatureContext();
+  const { googleLogin, registerLogin, user } = useAuthContext();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user]);
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password_confirmation, setPassword_confirmation] = useState('');
 
-  const { googleLogin, registerLogin } = useAuthContext();
-
   const onSubmit = async (e) => {
     e.preventDefault();
 
     if (type === 'register') {
-      const data = {
-        name: name,
-        email: email,
-        password: password,
-        password_confirmation: password_confirmation,
-      };
+      if (!name || !password || !email || !password_confirmation) {
+        displayAlert('Please provide all the required fields');
+      } else {
+        const data = {
+          name: name,
+          email: email,
+          password: password,
+          password_confirmation: password_confirmation,
+        };
 
-      await registerLogin(data, type);
+        await registerLogin(data, type);
+      }
     } else {
-      const data = {
-        email: email,
-        password: password,
-      };
-      await registerLogin(data, type);
+      if (!password || !email) {
+        displayAlert('Please provide all the required fields');
+      } else {
+        const data = {
+          email: email,
+          password: password,
+        };
+        await registerLogin(data, type);
+      }
     }
   };
 
   return (
     <div className=' flex justify-center items-center min-h-[100vh]'>
+      {showAlert ? <Alert /> : null}
       <div className=' flex justify-center items-center gap-[213px]'>
         <img
           src={signin}
@@ -98,6 +117,7 @@ const AuthModel = ({ type }) => {
                   Name <span className=' text-fontRed'>*</span>
                 </label>
                 <input
+                  autoComplete='true'
                   onChange={(e) => setName(e.target.value)}
                   name='name'
                   type='text'
@@ -113,6 +133,7 @@ const AuthModel = ({ type }) => {
                 Email <span className=' text-fontRed'>*</span>
               </label>
               <input
+                autoComplete='true'
                 onChange={(e) => setEmail(e.target.value)}
                 name='email'
                 type='text'
@@ -126,6 +147,7 @@ const AuthModel = ({ type }) => {
               </label>
               <input
                 onChange={(e) => setPassword(e.target.value)}
+                autoComplete='true'
                 name='password'
                 type='password'
                 maxLength={40}
@@ -139,6 +161,7 @@ const AuthModel = ({ type }) => {
                 </label>
                 <input
                   onChange={(e) => setPassword_confirmation(e.target.value)}
+                  autoComplete='true'
                   name='password_confirmation'
                   type='password'
                   maxLength={40}

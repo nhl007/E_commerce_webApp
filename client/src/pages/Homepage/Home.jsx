@@ -1,6 +1,6 @@
 import React from 'react';
 import NavBar from '../../components/NavBar';
-import Catagory from './components/Catagory';
+import Category from './components/Category';
 import Card from './components/Card';
 import {
   controller,
@@ -24,22 +24,22 @@ const Home = () => {
       <NavBar />
       {/* //! hero sec  */}
       <div className=' flex flex-row justify-start items-end mt-[53px] gap-[32px] relative'>
-        <Catagory />
-        <div className='  absolute right-0 top-[32px]'>
+        <Category />
+        <div className='  absolute right-0 top-[1rem]'>
           <Navigation />
         </div>
-        <div className=' max-w-[570px] h-[380px] px-[48px] pt-[32px] pb-[56px] flex flex-col gap-4 __shadow rounded-[10px] bg-whiteBg'>
+        <div className=' max-w-[570px] max-h-[380px] px-[48px] pt-[3.2rem] pb-[3.2rem] flex flex-col gap-[1.6rem] __shadow rounded-[10px] bg-whiteBg'>
           <h1 className=' font-clash600 text-[48px] leading-[59px] text-font1'>
             Nikon D3100
           </h1>
           <div className=' flex gap-[48px]'>
             <div className=' flex flex-col'>
-              <p className=' max-w-[200px] text-[11px] leading-[14px] mb-6'>
+              <p className=' max-w-[200px] text-[11px] leading-[14px] mb-[2.4rem]'>
                 Easily capture the beauty of life's fleeting moments with
                 Nikon's compact and lightweight D3100
               </p>
 
-              <h1 className='font-clash600 text-[24px] leading-[30px] text-font1 mb-12'>
+              <h1 className='font-clash600 text-[24px] leading-[30px] text-font1 mb-[4.8rem]'>
                 $798.00
               </h1>
 
@@ -55,13 +55,13 @@ const Home = () => {
             image={headphone}
             heading={'JBL T450 Headphone'}
             description={'JBL T450 Headphones Wireless Audio'}
-            price={'$24.95'}
+            price={'24.95'}
           />
           <Card
             image={controller}
             heading={'Xbox One Controller'}
             description={'Xbox 360 controller Game Controllers'}
-            price={'$10.95'}
+            price={'10.95'}
           />
         </div>
       </div>
@@ -88,7 +88,7 @@ const Home = () => {
       <Banner />
       <AllProducts />
       {/* //!The membership plan */}
-      <div className='ml-[-8rem] lg:ml-[-3rem] px-[8rem] w-[100vw] h-[251px] mt-[94px] bg-greyBg flex justify-center '>
+      <div className='ml-[-12rem] px-[12rem] w-[100vw] h-[251px] mt-[94px] bg-greyBg flex justify-center '>
         <div className='flex justify-between w-full relative ml-[3rem]'>
           <div className=' flex flex-col pt-8'>
             <h1 className='font-clash600 text-[48px] leading-[59px] text-font1 mb-4'>

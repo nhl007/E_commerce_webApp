@@ -92,14 +92,6 @@
   font-style: normal;
 }
 
-body {
-  background: '#FFFFFF';
-  font-family: 'ClashGrotesk-Medium', sans-serif;
-  font-size: 16px;
-  line-height: 19.68px;
-  color: #003503;
-}
-
 /*? CSS Reset */
 
 * {
@@ -110,6 +102,20 @@ body {
 
 img {
   display: block;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background: '#FFFFFF';
+  font-family: 'ClashGrotesk-Medium', sans-serif;
+  font-size: 1.6rem;
+  font-size: 16px;
+  line-height: 2rem;
+  line-height: 19.68px;
+  color: #003503;
 }
 
 /*? CSS Reset */
@@ -126,7 +132,7 @@ img {
 
 @media (min-width: 1500px) {
   body {
-    font-size: 24px;
+    font-size: 16px;
   }
 }
 
@@ -135,4 +141,15 @@ img {
   top: 24px;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.zoomable-image {
+  max-width: 100%;
+  height: auto;
+  transition: all 0.2s ease-in-out;
+}
+
+.zoomed {
+  transform: scale(2);
+  z-index: 1;
 }

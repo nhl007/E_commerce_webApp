@@ -2,7 +2,16 @@ import axios from 'axios';
 import React, { useEffect, useReducer } from 'react';
 import { useContext } from 'react';
 import reducer from './reducer';
-import { ADD_TO_CART, SET_ALL_PRODUCTS } from './actions';
+import {
+  ADMIN_DELETE_PRODUCT,
+  SET_ALL_PRODUCTS,
+  SET_CURRENT_PRODUCT,
+  SET_CURRENT_PRODUCT_REVIEW,
+  UPDATE_CART,
+} from './actions';
+import useLocalStorage from '../../hooks/useLocalStorage';
+import { useFeatureContext } from '../feature/FeatureContext';
+import { useAuthContext } from '../auth/AuthContext';
 
 const productContext = React.createContext();
 
@@ -10,41 +19,78 @@ const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 const initialState = {
   products: [],
+  currentProduct: null,
+  currentProductReviews: null,
   cart: cart ? cart : [],
   totalCartProducts: cart.length ? cart.length : 0,
   totalProducts: 0,
   totalPage: 0,
   currentPage: 0,
+  categories: [
+    'Electronics',
+    'Camera',
+    'Video',
+    'Audio',
+    'Laptop',
+    'Desktop',
+    'Mobile',
+    'Headphone',
+    'Books',
+    'Clothing',
+    'Beauty/Healthcare',
+    'Sports',
+    'Outdoor',
+    'Home',
+  ],
 };
 
 const ProductProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
   const apiUrl = import.meta.env.VITE_API_URL;
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [cart, setCart] = useLocalStorage('cart', state.cart);
+  const { displayAlert } = useFeatureContext();
+
+  const config = {
+    withCredentials: true,
+    credentials: 'include',
+  };
 
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(state.cart));
-  }, [state.cart]);
+    getAllProducts();
+  }, []);
 
-  const removeLocalStorage = () => {
-    localStorage.removeItem('cart');
-  };
   const addToCart = (id) => {
     axios
       .get(`${apiUrl}/product/${id}`)
       .then((data) => {
         const product = data.data.product;
+        const updatedCart = [...state.cart, product];
+        setCart(updatedCart);
         dispatch({
-          type: ADD_TO_CART,
+          type: UPDATE_CART,
           payload: {
-            product: product,
-            total: ++state.totalCartProducts,
+            cart: updatedCart,
+            total: updatedCart.length,
           },
         });
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const removeFromCart = (id) => {
+    const cart = [...state.cart];
+    const updatedCart = cart.filter((item) => item._id !== id);
+    setCart(updatedCart);
+    dispatch({
+      type: UPDATE_CART,
+      payload: {
+        cart: updatedCart,
+        total: updatedCart.length,
+      },
+    });
   };
 
   const getAllProducts = () => {
@@ -64,22 +110,30 @@ const ProductProvider = ({ children }) => {
       });
   };
 
-  const getASingleProduct = (id) => {
-    axios
+  const getASingleProduct = async (id) => {
+    await axios
       .get(`${apiUrl}/product/${id}`)
       .then((data) => {
-        console.log(data);
+        const { product } = data.data;
+        dispatch({
+          type: SET_CURRENT_PRODUCT,
+          payload: product,
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  const getProductReview = (id) => {
+  const getProductReview = async (id) => {
     axios
-      .get(`${apiUrl}/review?id=${id}`)
+      .get(`${apiUrl}/review?id=${id}`, config)
       .then((data) => {
-        console.log(data);
+        const { reviews } = data.data;
+        dispatch({
+          type: SET_CURRENT_PRODUCT_REVIEW,
+          payload: reviews,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -112,16 +166,49 @@ const ProductProvider = ({ children }) => {
       });
   };
 
+  const adminDeleteAProduct = async (id) => {
+    try {
+      const data = await axios.delete(`${apiUrl}/admin/product/${id}`, config);
+      const { product } = data.data;
+      dispatch({
+        type: ADMIN_DELETE_PRODUCT,
+        payload: {
+          id: product._id,
+        },
+      });
+      displayAlert(data.data.message);
+    } catch (err) {
+      displayAlert(err.response.data.message, false);
+    }
+  };
+
+  const createNewProduct = async (values) => {
+    try {
+      const data = await axios.post(
+        `${apiUrl}/admin/product/new`,
+        values,
+        config
+      );
+      getAllProducts();
+      displayAlert('Successfully created a new product!');
+    } catch (err) {
+      displayAlert(err.response.data.message, false);
+    }
+  };
+
   return (
     <productContext.Provider
       value={{
         ...state,
         addToCart,
+        removeFromCart,
         getAllProducts,
         getASingleProduct,
         getProductReview,
         postProductReview,
         delProductReview,
+        adminDeleteAProduct,
+        createNewProduct,
       }}
     >
       {children}

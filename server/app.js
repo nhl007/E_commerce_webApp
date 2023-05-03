@@ -1,23 +1,39 @@
 //!imports package
 const express = require('express');
 const cors = require('cors');
-const cookie_parser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 
 //! import routes
 const products = require('./routes/product');
 const auth = require('./routes/auth');
 const orders = require('./routes/order');
 
-//! import middlewares
+//! import middleware
 const ErrorHandler = require('./middleware/errors');
 
 //! app
 const app = express();
 
 //!middleware
-app.use(cors());
+
+const whitelist = ['http://localhost:5173', 'https://localhost:5173'];
+
+const corsOptions = {
+  credentials: true,
+  origin: (origin, callback) => {
+    // `!origin` allows server-to-server requests (ie, localhost requests)
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS: ' + origin));
+    }
+  },
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
-app.use(cookie_parser());
+app.use(cookieParser());
 
 //!routes
 app.get('/', (req, res) => {

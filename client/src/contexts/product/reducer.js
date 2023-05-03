@@ -1,4 +1,10 @@
-import { ADD_TO_CART, SET_ALL_PRODUCTS } from './actions';
+import {
+  ADMIN_DELETE_PRODUCT,
+  SET_ALL_PRODUCTS,
+  SET_CURRENT_PRODUCT,
+  SET_CURRENT_PRODUCT_REVIEW,
+  UPDATE_CART,
+} from './actions';
 
 const reducer = (state, action) => {
   if (action.type === SET_ALL_PRODUCTS) {
@@ -7,11 +13,32 @@ const reducer = (state, action) => {
       products: action.payload.product,
       totalProducts: action.payload.totalProducts,
     };
-  } else if (action.type === ADD_TO_CART) {
+  }
+  if (action.type === SET_CURRENT_PRODUCT) {
     return {
       ...state,
-      cart: [...state.cart, action.payload.product],
+      currentProduct: action.payload,
+    };
+  }
+  if (action.type === SET_CURRENT_PRODUCT_REVIEW) {
+    return {
+      ...state,
+      currentProductReviews: action.payload,
+    };
+  } else if (action.type === UPDATE_CART) {
+    return {
+      ...state,
+      cart: [...action.payload.cart],
       totalCartProducts: action.payload.total,
+    };
+  } else if (action.type === ADMIN_DELETE_PRODUCT) {
+    const updatedProducts = state?.products.filter(
+      (prod) => prod._id !== action.payload.id
+    );
+    return {
+      ...state,
+      products: [...updatedProducts],
+      totalCartProducts: updatedProducts.length,
     };
   }
 
