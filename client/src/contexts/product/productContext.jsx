@@ -11,7 +11,6 @@ import {
 } from './actions';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import { useFeatureContext } from '../feature/FeatureContext';
-import { useAuthContext } from '../auth/AuthContext';
 
 const productContext = React.createContext();
 

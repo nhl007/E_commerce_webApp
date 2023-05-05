@@ -1,6 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
 
-import { Home, Register, SignIn, Cart, ProductPage, Admin } from './pages';
+import {
+  Home,
+  Register,
+  SignIn,
+  Cart,
+  ProductPage,
+  Admin,
+  CheckoutPage,
+} from './pages';
 
 import { AdminUsers, AdminOrders, AdminProduct } from './pages/Admin';
 
@@ -49,6 +57,7 @@ const App = () => {
         </Route>
         <Route exact path='/orders' element={<Register />} />
         <Route exact path='/cart' element={<Cart />} />
+        <Route exact path='/checkout' element={<CheckoutPage />} />
         <Route path='/products/:productId' element={<ProductPage />} />
 
         <Route path='*' element={<Home />} />

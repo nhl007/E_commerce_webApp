@@ -3,18 +3,31 @@ import { NavBar, Footer } from '../components';
 import { useProductContext } from '../contexts/product/productContext';
 import { headphone } from '../assets';
 import { TrashIcon } from '@heroicons/react/24/outline';
+import CheckoutPage from './CheckoutPage';
 
 const Cart = () => {
   const { cart, removeFromCart } = useProductContext();
   const [total, setTotal] = useState(0);
+  const [checkout, setCheckout] = useState(false);
 
   useEffect(() => {
-    let sum = cart?.reduce((acc, item) => acc + item.price, 0);
+    let sum = cart?.reduce((acc, item) => {
+      return acc + item.price;
+    }, 0);
     setTotal(sum);
   }, [cart]);
 
+  const [orderedProducts, setOrderedProducts] = useState([]);
+
   return (
-    <div>
+    <div className=' w-full h-full'>
+      {checkout ? (
+        <CheckoutPage
+          products={orderedProducts}
+          total={total}
+          setShow={setCheckout}
+        />
+      ) : null}
       <NavBar />
       <div className=' w-full flex justify-start flex-col'>
         <div className='text-3xl text-font1 font-clash600 mt-8'>
@@ -42,6 +55,9 @@ const Cart = () => {
                     <p>In Stock : {item.stock} </p>
                     <div className=' flex gap-4'>
                       <Quantity
+                        product_id={item._id}
+                        orderedProducts={orderedProducts}
+                        setOrderedProducts={setOrderedProducts}
                         total={total}
                         setTotal={setTotal}
                         price={item.price}
@@ -61,7 +77,10 @@ const Cart = () => {
         </div>
         <div className=' h-[1px] w-full bg-font5 mb-4' />
         <div className=' flex justify-between mt-[.8rem]'>
-          <button className=' bg-green2 text-[2.4rem] px-[1.6rem] py-[1rem] '>
+          <button
+            onClick={() => setCheckout(true)}
+            className=' bg-green2 text-[2.4rem] px-[1.6rem] py-[1rem] '
+          >
             CheckOut
           </button>
           <p className=' text-[2.4rem]'>Total : {total} $</p>
@@ -74,18 +93,32 @@ const Cart = () => {
 
 export default Cart;
 
-const Quantity = ({ total, setTotal, price }) => {
+const Quantity = ({
+  total,
+  setTotal,
+  price,
+  product_id,
+  setOrderedProducts,
+}) => {
   const [quantity, setQuantity] = useState(1);
+
   useEffect(() => {
-    setTotal(total + quantity * price);
-  }, []);
+    setTotal((prev) => prev + price);
+    setOrderedProducts((prevOrderedProducts) => {
+      const updatedProd = prevOrderedProducts.filter(
+        (prod) => prod.product !== product_id
+      );
+      return [...updatedProd, { product: product_id, quantity: quantity }];
+    });
+  }, [quantity]);
+
   return (
     <div className=' flex gap-2 items-center'>
       <button
         onClick={() => {
           if (quantity > 1) {
             setQuantity((quantity) => quantity - 1);
-            setTotal((total) => total - price);
+            // setTotal((total) => total - price);
           }
         }}
         className='flex justify-center items-center text-font1 bg-font5 px-2'
@@ -96,7 +129,7 @@ const Quantity = ({ total, setTotal, price }) => {
       <button
         onClick={() => {
           setQuantity((quantity) => quantity + 1);
-          setTotal((total) => total + price);
+          // setTotal((total) => total + price);
         }}
         className='flex justify-center items-center text-font1 bg-font5 px-2'
       >

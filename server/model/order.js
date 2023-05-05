@@ -32,22 +32,22 @@ const orderSchema = mongoose.Schema({
 
   orderedItems: [
     {
-      name: {
-        type: String,
-        required: true,
-      },
+      // name: {
+      //   type: String,
+      //   required: true,
+      // },
       quantity: {
         type: String,
         required: true,
       },
-      price: {
-        type: Number,
-        required: true,
-      },
-      image: {
-        type: String,
-        required: true,
-      },
+      // price: {
+      //   type: Number,
+      //   required: true,
+      // },
+      // image: {
+      //   type: String,
+      //   required: true,
+      // },
       product: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
@@ -61,7 +61,8 @@ const orderSchema = mongoose.Schema({
       type: String,
     },
     status: {
-      type: String,
+      type: Boolean,
+      default: false,
     },
   },
 
@@ -69,23 +70,23 @@ const orderSchema = mongoose.Schema({
     type: Date,
   },
 
-  itemsPrice: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
+  // itemsPrice: {
+  //   type: Number,
+  //   required: true,
+  //   default: 0,
+  // },
 
-  taxPrice: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
+  // taxPrice: {
+  //   type: Number,
+  //   required: true,
+  //   default: 0,
+  // },
 
-  shippingPrice: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
+  // shippingPrice: {
+  //   type: Number,
+  //   required: true,
+  //   default: 0,
+  // },
 
   totalPrice: {
     type: Number,

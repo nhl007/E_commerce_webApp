@@ -167,7 +167,7 @@ const OrderDetails = ({ order, deleteOrder }) => {
         </td>
         <td className='px-6 py-4 '>{order.totalPrice}</td>
         <td className='px-6 py-4 '>
-          {order.paymentInfo.status === 'success' ? 'Paid' : 'Not-Paid'}
+          {order.paymentInfo.status ? 'Paid' : 'Not-Paid'}
         </td>
         <td className='px-6 py-4 '>{order.paidAt.slice(0, 10)}</td>
         <td className='px-6 py-4'>

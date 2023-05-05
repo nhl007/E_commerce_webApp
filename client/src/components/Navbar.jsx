@@ -47,7 +47,7 @@ const NavBar = () => {
               setProfile(true);
             }}
             onClick={() => {
-              setProfile(true);
+              setProfile((prev) => !prev);
             }}
             className=' rounded-[50%] px-4 py-2  bg-green4 text-font2'
             to='profile'
@@ -66,7 +66,7 @@ const NavBar = () => {
         )}
       </div>
       <div
-        onMouseEnter={(prev) => {
+        onMouseEnter={() => {
           setProfile(true);
         }}
         onMouseLeave={() => {
