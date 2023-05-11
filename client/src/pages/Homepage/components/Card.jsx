@@ -28,35 +28,35 @@ const Card = ({ image, heading, description, price, background, id }) => {
     }
   };
   return (
-    <section className=' z-50 relative'>
+    <section className=' w-[27.7rem] z-50 relative cursor-grab'>
       <div
         onClick={() => navigate(`/products/${id}`)}
-        className={` flex flex-col w-[277px] h-[auto] rounded-[10px] px-4 pt-4 ${
+        className={` flex flex-col rounded-[1rem] px-4 py-[1.2rem] ${
           background ? ' bg-[#F5F5F5]' : 'bg-green3'
         } `}
       >
         {showAlert && <Alert />}
-        <h1 className='w-full text-ellipsis whitespace-nowrap overflow-hidden font-clash600 text-[20px] leading-[30px]'>
+        <h1 className='w-full text-ellipsis whitespace-nowrap overflow-hidden font-clash600 text-[2rem] leading-[3rem]'>
           {heading}
         </h1>
-        <div className=' h-[108px] flex items-end mt-[12px]'>
+        <div className='h-[10.8rem] flex items-end pt-[1.2rem]'>
           <div className='absolute bottom-4 flex flex-col gap-4'>
-            <p className=' w-[115px] text-[11px] leading-[14px] '>
+            <p className=' w-[13rem] text-[1.2rem] leading-[1.4rem] '>
               {description}
             </p>
 
-            <h1 className='font-clash600 text-[24px] leading-[30px]'>
+            <h1 className='font-clash600 text-[2.4rem] leading-[3rem]'>
               {currencyFormatter(price)}
             </h1>
           </div>
-          <div className='absolute bottom-[18px] right-[32px]'>
+          <div className='absolute bottom-[1.2rem] right-[3.2rem]'>
             <img src={image} width={107} height={100} />
           </div>
         </div>
       </div>
       <button
         onClick={addTOCart}
-        className='absolute bottom-[20px] text-whiteBg right-4 cursor-pointer z-[999]'
+        className='absolute bottom-[2rem] text-whiteBg right-4 cursor-pointer z-[999]'
       >
         <img src={cartIcon} width={20} height={20} alt='fav' />
       </button>

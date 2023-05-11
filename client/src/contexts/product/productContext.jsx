@@ -36,11 +36,13 @@ const initialState = {
     'Headphone',
     'Books',
     'Clothing',
-    'Beauty/Healthcare',
+    'Beauty',
     'Sports',
     'Outdoor',
     'Home',
   ],
+  searchKeyword: '',
+  searchResult: null,
 };
 
 const ProductProvider = ({ children }) => {
@@ -195,6 +197,41 @@ const ProductProvider = ({ children }) => {
     }
   };
 
+  const onSearch = async (
+    search = '',
+    category = '',
+    price = '',
+    ratings = ''
+  ) => {
+    let url = `${apiUrl}/products?`;
+    if (search) {
+      url += `keyword=${search}&`;
+    }
+
+    if (category) {
+      url += `category=${
+        category.charAt(0).toUpperCase() + category.slice(1)
+      }&`;
+    }
+
+    if (price) {
+      url += `price=${price}`;
+    }
+    if (ratings) {
+      url += `ratings=${ratings}`;
+    }
+
+    if (url.endsWith('&')) {
+      url = url.slice(0, -1);
+    }
+    try {
+      const { products, totalProducts } = (await axios.get(url)).data;
+      return Promise.resolve({ total: totalProducts, data: products });
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  };
+
   return (
     <productContext.Provider
       value={{
@@ -208,6 +245,7 @@ const ProductProvider = ({ children }) => {
         delProductReview,
         adminDeleteAProduct,
         createNewProduct,
+        onSearch,
       }}
     >
       {children}

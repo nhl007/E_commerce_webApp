@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Search from './Search';
 import { Link, useNavigate } from 'react-router-dom';
 import { useProductContext } from '../contexts/product/productContext';
@@ -7,10 +7,14 @@ import {
   ShoppingCartIcon,
   AdjustmentsVerticalIcon,
   UserCircleIcon,
+  Bars3Icon,
+  XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { useAuthContext } from '../contexts/auth/AuthContext';
+import { logo } from '../assets';
 
 const NavBar = () => {
+  const [mobileNav, setMobileNav] = useState(false);
   const { totalCartProducts } = useProductContext();
   const { user, userType, logout } = useAuthContext();
   const [profile, setProfile] = useState(false);
@@ -20,12 +24,16 @@ const NavBar = () => {
     navigate('/sign-in');
   };
   return (
-    <nav className=' flex  justify-between relative'>
-      <h1 className=' font-clash600 text-font1 text-[32px] leading-[39px]'>
-        <Link to='/'>GGT.Mart</Link>
+    <nav className=' flex justify-between relative items-center'>
+      <h1 className=' font-clash600 text-font1 text-[3rem] sm:text-[2.4rem] leading-[39px] sm:leading-[3.2] sm:hidden'>
+        <Link to='/'>ASIF.MART</Link>
       </h1>
+      <Link className=' hidden sm:flex' to='/'>
+        <img src={logo} width={24} />
+      </Link>
       <Search />
-      <div className=' flex gap-[28px] items-center justify-center'>
+      {/* //? desktop Navbar */}
+      <div className=' flex gap-[28px] items-center justify-center sm:hidden'>
         <div className=' relative'>
           <Link to='/cart'>
             <ShoppingCartIcon width={24} className=' text-green1' />
@@ -38,26 +46,33 @@ const NavBar = () => {
             ''
           )}
         </div>
-        <Link to='/orders'>
-          <ShoppingBagIcon width={24} className=' text-green1' />
-        </Link>
         {user ? (
-          <button
-            onMouseEnter={() => {
-              setProfile(true);
-            }}
-            onClick={() => {
-              setProfile((prev) => !prev);
-            }}
-            className=' rounded-[50%] px-4 py-2  bg-green4 text-font2'
-            to='profile'
-          >
-            A
-          </button>
+          <div className=' flex gap-[28px] items-center justify-center'>
+            <Link to='/orders'>
+              <ShoppingBagIcon width={24} className=' text-green1' />
+            </Link>
+            <button
+              onMouseEnter={() => {
+                setProfile(true);
+              }}
+              onClick={() => {
+                setProfile((prev) => !prev);
+              }}
+              className=' rounded-[50%] px-4 py-2  bg-green4 text-font2'
+              to='profile'
+            >
+              A
+            </button>
+          </div>
         ) : (
-          <Link to='/sign-in'>
-            <UserCircleIcon width={24} className=' text-green1' />
-          </Link>
+          <button
+            className=' px-[1.2rem] py-[.8rem] bg-green1 text-white rounded hover:text-black transition-colors duration-500'
+            onClick={() => {
+              navigate('/sign-in');
+            }}
+          >
+            Login/Register
+          </button>
         )}
         {userType === 'admin' && (
           <Link to='/admin'>
@@ -65,6 +80,7 @@ const NavBar = () => {
           </Link>
         )}
       </div>
+      {/* //? desktop Navbar Modal */}
       <div
         onMouseEnter={() => {
           setProfile(true);
@@ -79,10 +95,90 @@ const NavBar = () => {
         <Link className=' hover:underline' to='/profile'>
           View Profile
         </Link>
-        <button onClick={logUserOut} className=' hover:underline under'>
+        <button onClick={logUserOut} className=' hover:underline'>
           Logout
         </button>
       </div>
+      {/* //? Mobile Navbar */}
+      <div
+        className='hidden sm:flex'
+        onClick={() => setMobileNav((prev) => !prev)}
+      >
+        {mobileNav ? (
+          <XMarkIcon
+            width={24}
+            height={24}
+            className=' text-green1 border-t-2 border-b-2'
+          />
+        ) : (
+          <Bars3Icon
+            width={24}
+            height={24}
+            className=' text-green1 border-t-2 border-b-2'
+          />
+        )}
+      </div>
+      {mobileNav ? (
+        <div className=' flex flex-col justify-center p-[2rem] absolute top-[4rem] right-0 bg-font3 text-green1 z-[999] gap-4'>
+          <div className='flex justify-center items-center gap-2'>
+            <Link to='/cart' className=' flex items-center gap-2'>
+              <ShoppingCartIcon width={24} className=' text-green1' /> Cart
+            </Link>
+            {totalCartProducts !== 0 ? (
+              <span className=' text-xl text-fontRed '>
+                ({totalCartProducts})
+              </span>
+            ) : (
+              ''
+            )}
+          </div>
+          {user ? (
+            <>
+              <Link className=' flex gap-2 items-center' to='/orders'>
+                <ShoppingBagIcon width={24} className=' text-green1' /> Orders
+              </Link>
+
+              {userType === 'admin' && (
+                <Link className=' flex gap-2 items-center' to='/admin'>
+                  <AdjustmentsVerticalIcon
+                    width={24}
+                    className=' text-green1'
+                  />{' '}
+                  Admin
+                </Link>
+              )}
+              <Link
+                style={{
+                  alignItems: 'center',
+                }}
+                to='/profile'
+                className='flex gap-2'
+              >
+                <p className=' rounded-[50%] px-3 py-1  bg-green4 text-font2'>
+                  {user.name.charAt(0).toUpperCase()}
+                </p>
+                {user.name}
+              </Link>
+
+              <button
+                className=' px-[.8rem] py-[.4rem] bg-green1 rounded hover:text-black transition-colors text-whiteBg duration-500'
+                onClick={logUserOut}
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <button
+              className=' px-[.8rem] py-[.4rem] bg-green1 rounded hover:text-black transition-colors text-whiteBg duration-500'
+              onClick={() => {
+                navigate('/sign-in');
+              }}
+            >
+              Login/Register
+            </button>
+          )}
+        </div>
+      ) : null}
     </nav>
   );
 };

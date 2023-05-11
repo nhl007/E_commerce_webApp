@@ -4,3 +4,4 @@ export const AUTH_FAILED = 'AUTH_FAILED';
 export const ADMIN_SAVE_ALL_USERS = 'ADMIN_SAVE_ALL_USERS';
 export const ADMIN_DELETE_USER = 'ADMIN_DELETE_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
+export const UPDATE_USER = 'UPDATE_USER';

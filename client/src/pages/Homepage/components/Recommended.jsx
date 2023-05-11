@@ -4,11 +4,11 @@ import { headphone } from '../../../assets';
 
 const Recommended = () => {
   return (
-    <div className=' mt-[80px] flex flex-col '>
-      <h1 className='font-clash600 text-[32px] leading-[39px]'>
+    <div className=' mt-[8rem] sm:mt-[4.8rem] flex flex-col '>
+      <h1 className='font-clash600 text-[3.2rem] leading-[3.9rem]'>
         Recommended For You
       </h1>
-      <div className=' flex mt-[48px] gap-[30px] min-h-full'>
+      <div className=' flex mt-[4.8rem] sm:mt-[2.4rem] gap-[3rem] sm:gap-[1.6rem] min-h-full sm:overflow-x-scroll'>
         <Card
           image={headphone}
           heading={'JBL T450 Headphone'}

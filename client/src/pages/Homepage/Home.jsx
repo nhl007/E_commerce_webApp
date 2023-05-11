@@ -10,7 +10,6 @@ import {
   moneyIcon,
   supportIcon,
 } from '../../assets';
-import Navigation from './components/Navigation';
 import Featured from './components/Featured';
 import Recommended from './components/Recommended';
 import ButtonGreen from '../../components/ButtonGreen';
@@ -23,34 +22,40 @@ const Home = () => {
     <div className=' flex flex-col'>
       <NavBar />
       {/* //! hero sec  */}
-      <div className=' flex flex-row justify-start items-end mt-[53px] gap-[32px] relative'>
+      <div className=' flex flex-row sm:flex-col justify-start items-end sm:items-start mt-[5.3rem] gap-[3.2rem] sm:gap-[1.6rem] relative'>
         <Category />
-        <div className='  absolute right-0 top-[1rem]'>
-          <Navigation />
+        <div className=' sm:hidden  absolute right-0 top-[1rem]'>
+          <div className=' flex justify-center items-center gap-[3.2rem] font-clash600 pr-1'>
+            <p>Top Deal</p>
+          </div>
         </div>
-        <div className=' max-w-[570px] max-h-[380px] px-[48px] pt-[3.2rem] pb-[3.2rem] flex flex-col gap-[1.6rem] __shadow rounded-[10px] bg-whiteBg'>
-          <h1 className=' font-clash600 text-[48px] leading-[59px] text-font1'>
+        <div className=' max-w-[57rem] max-h-[38rem] px-[4.8rem] sm:px-[2.4rem] pt-[3.2rem] pb-[3.2rem] flex flex-col gap-[1.6rem] __shadow rounded-[1rem] bg-whiteBg'>
+          <h1 className=' font-clash600 text-[4.8rem] leading-[5.9rem] text-font1'>
             Nikon D3100
           </h1>
-          <div className=' flex gap-[48px]'>
+          <div className=' flex gap-[4.8rem]'>
             <div className=' flex flex-col'>
-              <p className=' max-w-[200px] text-[11px] leading-[14px] mb-[2.4rem]'>
+              <p className=' max-w-[20rem] text-[1.2rem] leading-[1.4rem] mb-[2.4rem]'>
                 Easily capture the beauty of life's fleeting moments with
                 Nikon's compact and lightweight D3100
               </p>
 
-              <h1 className='font-clash600 text-[24px] leading-[30px] text-font1 mb-[4.8rem]'>
+              <h1 className='font-clash600 text-[2.4rem] leading-[3rem] text-font1 mb-[4.8rem]'>
                 $798.00
               </h1>
 
-              <ButtonGreen text={'Shop Now'} width={'110px'} height={'44px'} />
+              <ButtonGreen
+                text={'Shop Now'}
+                width={'11rem'}
+                height={'4.4rem'}
+              />
             </div>
             <div>
               <img src={hero} width={213} height={206} />
             </div>
           </div>
         </div>
-        <div className='flex flex-col gap-[19px]'>
+        <div className='sm:w-full flex flex-col gap-[2rem] sm:mt-[2.4rem] sm:justify-center sm:items-center'>
           <Card
             image={headphone}
             heading={'JBL T450 Headphone'}
@@ -66,7 +71,7 @@ const Home = () => {
         </div>
       </div>
       {/* //! hero sec ends  */}
-      <div className=' flex mt-[128px] gap-10 justify-center items-center'>
+      <div className=' flex sm:flex-col mt-[12.8rem] sm:mt-[4.8rem] gap-[4rem] sm:gap-[2.4rem] justify-center  items-center sm:items-start'>
         <Marketing
           icon={supportIcon}
           text={'Support online 24 hours a day'}
@@ -88,18 +93,18 @@ const Home = () => {
       <Banner />
       <AllProducts />
       {/* //!The membership plan */}
-      <div className='ml-[-12rem] px-[12rem] w-[100vw] h-[251px] mt-[94px] bg-greyBg flex justify-center '>
-        <div className='flex justify-between w-full relative ml-[3rem]'>
+      <div className='lg:ml-[-4rem] xl:ml-[-12rem] sm:ml-0 px-[12rem] sm:px-0 w-[100vw] sm:w-full h-[25.1rem] sm:h-auto mt-[9.4rem] sm:mt-[2.4rem] bg-greyBg flex justify-center '>
+        <div className='flex justify-between w-full relative ml-[3rem] sm:ml-0'>
           <div className=' flex flex-col pt-8'>
-            <h1 className='font-clash600 text-[48px] leading-[59px] text-font1 mb-4'>
+            <h1 className='font-clash600 text-[4.8rem] sm:text-[3.2rem] sm:leading-[3.9rem] leading-[5.9rem] text-font1 mb-4'>
               The Membership Plan
             </h1>
-            <p className='mb-[44px] max-w-[688px]'>
+            <p className='mb-[4.4rem] sm:mb-[2.4rem] max-w-[688px]'>
               provides 24/7/365 tech support, up to 24 months of product
               protection with active membership, free standard installation and
               so much more.Terms and conditions apply.
             </p>
-            <p className='font-clash600 text-[32px] leading-[39px] text-font1 mb-4'>
+            <p className='font-clash600 text-[3.2rem] leading-[3.9rem] text-font1 mb-4 sm:mb-2'>
               Learn More
             </p>
           </div>

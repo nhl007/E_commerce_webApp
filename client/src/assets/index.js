@@ -7,6 +7,7 @@ import hero from './hero.png';
 import jbl from './jbl.png';
 import phone from './phone.png';
 import tv from './tv.png';
+import logo from './logo_main.webp';
 
 import adPhone from './ad-phone.png';
 import ad1 from './ad1.png';
@@ -25,8 +26,11 @@ import searchIcon from './icons/search.svg';
 import supportIcon from './icons/support.svg';
 import mailIcon from './icons/mailIcon.svg';
 import orderIcon from './icons/order.svg';
+import logoWhite from './logos/logo-white.svg';
 
 export {
+  logoWhite,
+  logo,
   hero,
   orderIcon,
   controller,

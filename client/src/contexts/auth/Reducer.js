@@ -4,6 +4,7 @@ import {
   AUTH_SUCCESS,
   AUTH_SUCCESS_GOOGLE,
   LOGOUT_USER,
+  UPDATE_USER,
 } from './actions';
 
 const reducer = (state, action) => {
@@ -25,6 +26,12 @@ const reducer = (state, action) => {
       token: null,
       user: null,
       userType: '',
+    };
+  } else if (action.type === UPDATE_USER) {
+    return {
+      ...state,
+      user: action.payload.user,
+      userType: action.payload.role,
     };
   } else if (action.type === ADMIN_SAVE_ALL_USERS) {
     return {

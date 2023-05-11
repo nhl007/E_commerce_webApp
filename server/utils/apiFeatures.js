@@ -25,15 +25,31 @@ class apiFeatures {
     let queryOptions = { ...this.queryStr };
 
     const removeFields = ['keyword', 'limit', 'page'];
+
     removeFields.forEach((el) => {
       delete queryOptions[el];
     });
+    if (queryOptions.price) {
+      const [minPrice, maxPrice] = queryOptions.price
+        .split('-')
+        .map((price) => parseInt(price.trim()));
+      const priceFilter = {
+        gte: minPrice,
+        lte: maxPrice,
+      };
+      queryOptions = {
+        ...queryOptions,
+        price: priceFilter,
+      };
+    }
 
     const stringOfQuery = JSON.stringify(queryOptions);
+
     queryOptions = stringOfQuery.replace(
       /\b(gt|gte|lte|lt)\b/g,
       (match) => `$${match}`
     );
+
     this.query = this.query.find(JSON.parse(queryOptions));
     return this;
   }

@@ -6,6 +6,7 @@ import {
   ADMIN_SAVE_ALL_USERS,
   ADMIN_DELETE_USER,
   LOGOUT_USER,
+  UPDATE_USER,
 } from './actions';
 import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import axios from 'axios';
@@ -19,7 +20,7 @@ const user = JSON.parse(localStorage.getItem('user'));
 const initialState = {
   token: token ? token : null,
   user: user ? user : null,
-  userType: user ? user.roles : 'cus',
+  userType: user ? user.roles : '',
   adminUsers: null,
   adminTotalUsers: 0,
 };
@@ -126,6 +127,27 @@ const AuthProvider = ({ children }) => {
       });
   };
 
+  const updateProfile = async (type, data) => {
+    await axios
+      .put(`${apiUrl}/${type}/update`, data, config)
+      .then((res) => {
+        const { user } = res.data;
+        console.log(user);
+        setLocalStorage(state.token, user);
+        dispatch({
+          type: UPDATE_USER,
+          payload: {
+            user: user,
+            role: user.roles,
+          },
+        });
+        displayAlert(res.data.message);
+      })
+      .catch((err) => {
+        displayAlert(err.response.data.message, false);
+      });
+  };
+
   const getAllUsersAdmin = async () => {
     try {
       const data = await axios.get(`${apiUrl}/admin/users`, config);
@@ -169,6 +191,7 @@ const AuthProvider = ({ children }) => {
         logout,
         getAllUsersAdmin,
         adminDeleteUser,
+        updateProfile,
       }}
     >
       {children}

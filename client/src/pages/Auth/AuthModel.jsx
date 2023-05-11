@@ -51,17 +51,17 @@ const AuthModel = ({ type }) => {
   };
 
   return (
-    <div className=' flex justify-center items-center min-h-[100vh]'>
+    <div className=' flex justify-center items-center min-h-[100vh] sm:px-4'>
       {showAlert ? <Alert /> : null}
-      <div className=' flex justify-center items-center gap-[213px]'>
+      <div className=' flex justify-center items-center gap-[213px] sm:gap-0'>
         <img
           src={signin}
           alt='authentication'
           width={381}
           height={385}
-          className=' object-cover'
+          className=' object-cover sm:hidden'
         />
-        <div className=' flex flex-col w-[403px] '>
+        <div className=' flex flex-col w-[40.3rem] sm:w-[32rem] '>
           <h1 className=' font-clash700 text-[28px] leading-[42px]'>
             {type === 'register'
               ? 'Create an account.'
@@ -171,18 +171,18 @@ const AuthModel = ({ type }) => {
             ) : (
               ''
             )}
-            <button className=' py-[12px] leading-6 text-font2 bg-font3 __input_auth'>
+            <button className=' flex justify-center items-center py-[1.6rem] leading-6 text-font2 bg-font3 __input_auth mt-[2.4rem]'>
               {type === 'register' ? 'Sign up' : 'Sign In'}
             </button>
             <p className='text-font5 leading-[24px] mb-9'>
               {type === 'register' ? (
                 <Link to='/sign-in'>
-                  Already have an account?{'  '}
-                  <span className=' underline'> Login here.</span>{' '}
+                  Already have an account?
+                  <span className=' underline'> Login here.</span>
                 </Link>
               ) : (
                 <Link to='/register'>
-                  Create an account?{'  '}
+                  Create an account?
                   <span className=' underline'> Signup here.</span>
                 </Link>
               )}

@@ -52,14 +52,14 @@ const AdminOrders = () => {
         <h1 className=' self-center text-[3.2rem] font-clash600'>
           Orders Dashboard
         </h1>
-        <div className=' flex gap-[4.8rem] mt-[2.4rem]'>
+        {/* <div className=' flex gap-[4.8rem] mt-[2.4rem]'>
           <button
             onClick={() => setShow(true)}
             className=' px-[1.6rem] py-[.8rem] bg-font4 text-font5'
           >
             Add New Product
           </button>
-        </div>
+        </div> */}
         <table className='w-full text-[1.6rem] sm:text-[1.2rem] text-left text-font5 mt-[2.4rem]'>
           <thead className='text-[1.8rem] text-font5 uppercase bg-font4 '>
             <tr className=' sm:text-[1.2rem]'>
