@@ -1,5 +1,4 @@
-import React from 'react';
-import { adPhone } from '../../../assets';
+import React, { memo } from 'react';
 import { phone } from '../../../assets';
 
 const Banner = () => {
@@ -25,4 +24,4 @@ const Banner = () => {
   );
 };
 
-export default Banner;
+export default memo(Banner);

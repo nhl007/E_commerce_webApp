@@ -94,7 +94,6 @@ input:focus {
 }
 .__center_position_absolute {
   position: absolute;
-  top: 3rem;
   left: 50%;
   transform: translateX(-50%);
 }

@@ -6,7 +6,6 @@ import {
   ShoppingBagIcon,
   ShoppingCartIcon,
   AdjustmentsVerticalIcon,
-  UserCircleIcon,
   Bars3Icon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
@@ -29,7 +28,7 @@ const NavBar = () => {
         <Link to='/'>ASIF.MART</Link>
       </h1>
       <Link className=' hidden sm:flex' to='/'>
-        <img src={logo} width={24} />
+        <img src={logo} width={26} />
       </Link>
       <Search />
       {/* //? desktop Navbar */}

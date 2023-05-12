@@ -1,11 +1,18 @@
-import React from 'react';
 import { cartIcon } from '../../../assets';
 import { useProductContext } from '../../../contexts/product/productContext';
 import { useFeatureContext } from '../../../contexts/feature/FeatureContext';
 import Alert from '../../../components/Alert';
 import { useNavigate } from 'react-router-dom';
 import { currencyFormatter } from '../../../utils/mathOperations';
-const Card = ({ image, heading, description, price, background, id }) => {
+const Card = ({
+  image,
+  heading,
+  description,
+  price,
+  background,
+  id,
+  cartBtn = true,
+}) => {
   const navigate = useNavigate();
   const { addToCart, cart } = useProductContext();
   const { showAlert, displayAlert } = useFeatureContext();
@@ -28,15 +35,15 @@ const Card = ({ image, heading, description, price, background, id }) => {
     }
   };
   return (
-    <section className=' w-[27.7rem] z-50 relative cursor-grab'>
+    <section className='z-50 relative cursor-grab'>
       <div
         onClick={() => navigate(`/products/${id}`)}
-        className={` flex flex-col rounded-[1rem] px-4 py-[1.2rem] ${
+        className={` flex flex-col rounded-[1rem] px-4 py-[1.2rem] w-[27.7rem] ${
           background ? ' bg-[#F5F5F5]' : 'bg-green3'
         } `}
       >
         {showAlert && <Alert />}
-        <h1 className='w-full text-ellipsis whitespace-nowrap overflow-hidden font-clash600 text-[2rem] leading-[3rem]'>
+        <h1 className=' text-ellipsis whitespace-nowrap overflow-hidden font-clash600 text-[2rem] leading-[3rem]'>
           {heading}
         </h1>
         <div className='h-[10.8rem] flex items-end pt-[1.2rem]'>
@@ -54,12 +61,14 @@ const Card = ({ image, heading, description, price, background, id }) => {
           </div>
         </div>
       </div>
-      <button
-        onClick={addTOCart}
-        className='absolute bottom-[2rem] text-whiteBg right-4 cursor-pointer z-[999]'
-      >
-        <img src={cartIcon} width={20} height={20} alt='fav' />
-      </button>
+      {cartBtn && (
+        <button
+          onClick={addTOCart}
+          className='absolute bottom-[2rem] text-whiteBg right-4 cursor-pointer z-[999]'
+        >
+          <img src={cartIcon} width={20} height={20} alt='fav' />
+        </button>
+      )}
     </section>
   );
 };

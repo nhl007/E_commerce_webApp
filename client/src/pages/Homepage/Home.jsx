@@ -26,16 +26,16 @@ const Home = () => {
         <Category />
         <div className=' sm:hidden  absolute right-0 top-[1rem]'>
           <div className=' flex justify-center items-center gap-[3.2rem] font-clash600 pr-1'>
-            <p>Top Deal</p>
+            <p>Top Deals</p>
           </div>
         </div>
-        <div className=' max-w-[57rem] max-h-[38rem] px-[4.8rem] sm:px-[2.4rem] pt-[3.2rem] pb-[3.2rem] flex flex-col gap-[1.6rem] __shadow rounded-[1rem] bg-whiteBg'>
+        <div className=' max-w-[70rem] max-h-[38rem] px-[4.8rem] sm:px-[2.4rem] pt-[3.2rem] pb-[3.2rem] flex flex-col gap-[1.6rem] __shadow rounded-[1rem] bg-whiteBg'>
           <h1 className=' font-clash600 text-[4.8rem] leading-[5.9rem] text-font1'>
             Nikon D3100
           </h1>
           <div className=' flex gap-[4.8rem]'>
             <div className=' flex flex-col'>
-              <p className=' max-w-[20rem] text-[1.2rem] leading-[1.4rem] mb-[2.4rem]'>
+              <p className=' max-w-[29rem] text-[1.2rem] leading-[1.4rem] mb-[2.4rem]'>
                 Easily capture the beauty of life's fleeting moments with
                 Nikon's compact and lightweight D3100
               </p>
@@ -119,12 +119,12 @@ export default Home;
 
 const Marketing = ({ icon, heading, text }) => {
   return (
-    <div className=' flex gap-8 justify-center items-center'>
-      <div className=' w-[48px] h-[48px] rounded-[50%] bg-green2 flex justify-center items-center'>
+    <div className=' flex gap-[3.2rem] justify-center items-center'>
+      <div className=' w-[4.8rem] h-[4.8rem] rounded-[50%] bg-green2 flex justify-center items-center'>
         <img className='' src={icon} width={20} height={20} />
       </div>
 
-      <div className=' flex flex-col gap-2'>
+      <div className=' flex flex-col gap-[.8rem]'>
         <p>{heading}</p>
         <p>{text}</p>
       </div>
