@@ -6,7 +6,6 @@ import {
   ADMIN_DELETE_PRODUCT,
   SET_ALL_PRODUCTS,
   SET_CURRENT_PRODUCT,
-  SET_CURRENT_PRODUCT_REVIEW,
   UPDATE_CART,
 } from './actions';
 import useLocalStorage from '../../hooks/useLocalStorage';
@@ -19,7 +18,7 @@ const cart = JSON.parse(localStorage.getItem('cart')) || [];
 const initialState = {
   products: [],
   currentProduct: null,
-  currentProductReviews: null,
+  // currentProductReviews: [],
   cart: cart ? cart : [],
   totalCartProducts: cart.length ? cart.length : 0,
   totalProducts: 0,
@@ -48,14 +47,13 @@ const initialState = {
 const ProductProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const apiUrl = import.meta.env.VITE_API_URL;
-
-  const [cart, setCart] = useLocalStorage('cart', state.cart);
-  const { displayAlert } = useFeatureContext();
-
   const config = {
     withCredentials: true,
     credentials: 'include',
   };
+
+  const [cart, setCart] = useLocalStorage('cart', state.cart);
+  const { displayAlert } = useFeatureContext();
 
   useEffect(() => {
     getAllProducts();
@@ -116,51 +114,11 @@ const ProductProvider = ({ children }) => {
       .get(`${apiUrl}/product/${id}`)
       .then((data) => {
         const { product } = data.data;
+
         dispatch({
           type: SET_CURRENT_PRODUCT,
           payload: product,
         });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const getProductReview = async (id) => {
-    axios
-      .get(`${apiUrl}/review?id=${id}`, config)
-      .then((data) => {
-        const { reviews } = data.data;
-        dispatch({
-          type: SET_CURRENT_PRODUCT_REVIEW,
-          payload: reviews,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const postProductReview = (rating, comment, productId) => {
-    axios
-      .post(`${apiUrl}/review`, {
-        rating: rating,
-        comment: comment,
-        productId: productId,
-      })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const delProductReview = (id) => {
-    axios
-      .delete(`${apiUrl}/review?productId=${id}`)
-      .then((data) => {
-        console.log(data);
       })
       .catch((err) => {
         console.log(err);
@@ -240,9 +198,6 @@ const ProductProvider = ({ children }) => {
         removeFromCart,
         getAllProducts,
         getASingleProduct,
-        getProductReview,
-        postProductReview,
-        delProductReview,
         adminDeleteAProduct,
         createNewProduct,
         onSearch,

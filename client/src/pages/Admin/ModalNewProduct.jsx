@@ -20,6 +20,10 @@ const ModalNewProduct = ({ show, setShow }) => {
     stock: '',
   };
 
+  const [imageUrl1, setImageUrl1] = useState('');
+  const [imageUrl2, setImageUrl2] = useState('');
+  const [imageUrl3, setImageUrl3] = useState('');
+
   const [values, setValues] = useState(initial);
 
   const handleChange = (e) => {
@@ -28,9 +32,25 @@ const ModalNewProduct = ({ show, setShow }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(values, '\n', category);
     if (userType === 'admin') {
       values.category = category;
+      const images = [
+        {
+          url: imageUrl1,
+        },
+        imageUrl2 !== ''
+          ? {
+              url: imageUrl2,
+            }
+          : null,
+        imageUrl3 !== ''
+          ? {
+              url: imageUrl3,
+            }
+          : null,
+      ];
+
+      values.images = images.filter((val) => val !== null);
       createNewProduct(values);
       setShow(false);
     } else {
@@ -39,7 +59,7 @@ const ModalNewProduct = ({ show, setShow }) => {
   };
 
   return (
-    <section className=' ml-[-12rem] fixed w-full h-full flex justify-center items-center gap-[3.2rem] bg-[transparent]'>
+    <section className='fixed top-0 w-full h-full flex justify-center items-center gap-[3.2rem] bg-[transparent]'>
       {showAlert ? <Alert /> : null}
       <form
         onSubmit={onSubmit}
@@ -57,13 +77,36 @@ const ModalNewProduct = ({ show, setShow }) => {
         >
           X
         </button>
-        <div className='flex flex-col gap-[2.4rem] w-[50%]  '>
+        <div className='flex flex-col gap-[2.4rem] w-[80%]  '>
           <div className='flex gap-[1rem] items-center justify-between'>
             <p className='font-clash600'>Category : </p>
             <DropdownMenu
               selectedCategory={category}
               setSelectedCategory={setCategory}
             />
+          </div>
+          <div className=' flex gap-[1rem] items-center justify-between '>
+            <label className='w-[40%] font-clash600'> Image Url :</label>
+            <div className='flex flex-col gap-4 w-full items-end'>
+              <input
+                name='image1'
+                placeholder='Image URL'
+                onChange={(e) => setImageUrl1(e.target.value)}
+                className=' w-[100%] text-[1.6rem] py-2 px-4 rounded-sm'
+              />
+              <input
+                name='image2'
+                placeholder='Image URL'
+                onChange={(e) => setImageUrl2(e.target.value)}
+                className=' w-[100%] text-[1.6rem] py-2 px-4 rounded-sm'
+              />
+              <input
+                name='image3'
+                placeholder='Image URL'
+                onChange={(e) => setImageUrl3(e.target.value)}
+                className=' w-[100%] text-[1.6rem] py-2 px-4 rounded-sm'
+              />
+            </div>
           </div>
           <div className=' flex gap-[1rem] items-center justify-between'>
             <label className=' font-clash600'> Name :</label>

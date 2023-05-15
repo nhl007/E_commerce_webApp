@@ -1,18 +1,17 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import Card from './Card';
 import { headphone } from '../../../assets';
 import { useProductContext } from '../../../contexts/product/productContext';
 
 const AllProducts = () => {
   const { products } = useProductContext();
-
   const Products = useMemo(() => {
     return products?.map((p, index) => {
       return (
         <Card
           key={index}
           id={p._id}
-          image={headphone}
+          image={p.images[0].url}
           heading={p.name}
           description={p.description}
           price={p.price}

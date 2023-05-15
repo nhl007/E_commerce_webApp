@@ -1,4 +1,5 @@
 const Product = require('../model/product');
+const Ranking = require('../model/ranking');
 
 const ErrorHandler = require('../utils/errorHandler');
 const apiFeatures = require('../utils/apiFeatures');
@@ -9,17 +10,17 @@ const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 exports.newProduct = catchAsyncErrors(async (req, res, next) => {
   req.body.user = req.user.id;
   const product = await Product.create(req.body);
+  await Ranking.create({
+    views: 0,
+    sales: 0,
+    product: product._id,
+  });
 
   return res.status(201).json({ success: true, product });
 });
 
-//! get all products from database
+//! get all products from database with search parameters
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
-  // Product.find()
-  //   .then((products) =>
-  //     res.status(200).json({ success: true, count: products.length, products })
-  //   )
-  //   .catch((err) => next(err));
   const prouctPerPage = 10;
 
   const feature = new apiFeatures(Product.find(), req.query)
@@ -35,6 +36,25 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
     products,
   });
 });
+
+//!get all product except the ranked products
+
+exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
+  const rankedProducts = await Ranking.find({}, 'product').sort({
+    rank: -1,
+  });
+
+  const products = await Product.find({
+    _id: { $nin: rankedProducts.map((p) => p.product) },
+  });
+
+  res.status(200).json({
+    success: true,
+    totalProducts: products.length,
+    products,
+  });
+});
+
 //! get a single product from database
 
 exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
@@ -46,6 +66,7 @@ exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
 
   return res.status(200).json({ success: true, product });
 });
+
 //! update a product with the specified id
 
 exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
@@ -71,6 +92,10 @@ exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
       .json({ success: false, message: 'Product not found' });
   }
 
+  const rankingModel = await Ranking.findOne({ product: product._id });
+
+  rankingModel.deleteOne(rankingModel._id);
+
   await product.remove();
 
   res.status(200).json({
@@ -92,7 +117,6 @@ exports.productReview = catchAsyncErrors(async (req, res, next) => {
     comments: comment,
   };
   const product = await Product.findById(productId);
-  console.log(product);
   const isReviewd = product.reviews.find(
     (r) => r.user.toString() === req.user._id.toString()
   );
@@ -116,6 +140,7 @@ exports.productReview = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: 'Product review submitted successfully.',
+    reviews: product.reviews,
   });
 });
 
@@ -135,11 +160,11 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.query.productId);
 
   const reviews = product.reviews.filter(
-    (review) => review._id.toString() === req.query.id.toString()
+    (review) => review._id.toString() !== req.query.id.toString()
   );
 
   const numofReviews = reviews.length;
-  console.log(reviews.length);
+
   const ratings =
     product.reviews.reduce((acc, item) => {
       item.rating + acc, 0;
@@ -165,5 +190,56 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: 'Review deleted successfully',
+    reviews: product.reviews,
+  });
+});
+
+//!update ranking of products
+
+exports.rankProducts = catchAsyncErrors(async (req, res, next) => {
+  const rank = await Ranking.findOne({ product: req.params.id });
+
+  const rankBy = req.query.update;
+  // console.log(rankBy, rankBy === 'views');
+
+  let data = null;
+
+  if (rankBy === 'views') {
+    data = {
+      views: rank.views + 1,
+      rank: rank.sales * 5 + (rank.views + 1),
+    };
+  } else {
+    data = {
+      sales: rank.sales + 1,
+      rank: (rank.sales + 1) * 5 + rank.views,
+    };
+  }
+
+  const resp = await Ranking.findOneAndUpdate({ _id: rank._id }, data, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+
+  console.log(resp);
+
+  res.status(200).json({
+    success: true,
+    message: 'Update Successfully!',
+  });
+});
+
+exports.getRankedProducts = catchAsyncErrors(async (req, res, next) => {
+  const ranked = await Ranking.find({}, 'product').sort({ rank: -1 }).limit(10);
+
+  const products = await Product.find({
+    _id: ranked.map((p) => p.product),
+  });
+
+  res.status(200).json({
+    success: true,
+    message: 'Update Successfully!',
+    products: products,
   });
 });

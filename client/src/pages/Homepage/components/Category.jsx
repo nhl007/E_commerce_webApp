@@ -13,10 +13,10 @@ const Category = ({ current }) => {
           to={`/category/${category.toLowerCase()}`}
           key={index}
           className={`flex gap-[1.8rem] sm:gap-[.5rem] ${
-            category.toLowerCase() === current ? 'text-fontRed' : ''
+            category.toLowerCase() === current ? 'text-fontRed' : 'text-green1'
           }`}
         >
-          <TagIcon className=' text-green1' width={16} />
+          <TagIcon width={16} />
           {category}
         </Link>
       );

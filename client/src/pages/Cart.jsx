@@ -22,6 +22,16 @@ const Cart = () => {
 
   const [orderedProducts, setOrderedProducts] = useState([]);
 
+  const removeItem = async (id) => {
+    await removeFromCart(id);
+    const deleteProd = orderedProducts.find((p) => p.product === id);
+    const newTotal = total - deleteProd.quantity * deleteProd.price;
+    setTotal(newTotal);
+    const newItems = orderedProducts.filter((p) => p.product !== id);
+    // console.log(newItems);
+    setOrderedProducts([...newItems]);
+  };
+
   return (
     <div className=' w-full h-full'>
       {checkout ? (
@@ -37,7 +47,7 @@ const Cart = () => {
         <div className='text-3xl text-font1 font-clash600 mt-[3.2rem]'>
           <h1>Cart Items </h1>
         </div>
-        <p className=' self-end my-2 text-2xl'>Sub Total</p>
+        <p className=' self-end my-2 text-2xl sm:hidden'>Sub Total</p>
         <div className=' h-[1px] w-full bg-font5 mb-4' />
         <div className='w-full gap-10 flex flex-col p-[10px] py-4 text-[20px]'>
           {cart.length === 0 ? (
@@ -49,7 +59,7 @@ const Cart = () => {
                   key={index}
                   className='w-full flex items-center gap-6 relative sm:flex-wrap'
                 >
-                  <p>{index + 1} .</p>
+                  <p className='w-[2.4rem]'>{index + 1} .</p>
                   {/* <div className='flex w-[150px] h-[auto]'>
                     <img src={headphone} />
                   </div> */}
@@ -69,14 +79,14 @@ const Cart = () => {
                     <p>In Stock : {item.stock} </p> */}
                     <div className=' flex gap-4'>
                       <Quantity
-                        product_id={item._id}
+                        product={item}
                         orderedProducts={orderedProducts}
                         setOrderedProducts={setOrderedProducts}
                         setTotal={setTotal}
                         price={item.price}
                       />
                       <button
-                        onClick={() => removeFromCart(item._id)}
+                        onClick={() => removeItem(item._id)}
                         className=' ml-4'
                       >
                         <TrashIcon height={24} color='red' />
@@ -106,16 +116,24 @@ const Cart = () => {
 
 export default Cart;
 
-const Quantity = ({ setTotal, price, product_id, setOrderedProducts }) => {
+const Quantity = ({ setTotal, price, product, setOrderedProducts }) => {
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     // setTotal((prev) => prev + price * quantity);
     setOrderedProducts((prevOrderedProducts) => {
       const updatedProd = prevOrderedProducts.filter(
-        (prod) => prod.product !== product_id
+        (prod) => prod.product !== product._id
       );
-      return [...updatedProd, { product: product_id, quantity: quantity }];
+      return [
+        ...updatedProd,
+        {
+          name: product.name,
+          price: product.price,
+          product: product._id,
+          quantity: quantity,
+        },
+      ];
     });
   }, [quantity]);
 

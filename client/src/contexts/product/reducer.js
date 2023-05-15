@@ -2,7 +2,7 @@ import {
   ADMIN_DELETE_PRODUCT,
   SET_ALL_PRODUCTS,
   SET_CURRENT_PRODUCT,
-  SET_CURRENT_PRODUCT_REVIEW,
+  // SET_CURRENT_PRODUCT_REVIEW,
   UPDATE_CART,
 } from './actions';
 
@@ -20,12 +20,13 @@ const reducer = (state, action) => {
       currentProduct: action.payload,
     };
   }
-  if (action.type === SET_CURRENT_PRODUCT_REVIEW) {
-    return {
-      ...state,
-      currentProductReviews: action.payload,
-    };
-  } else if (action.type === UPDATE_CART) {
+  // if (action.type === SET_CURRENT_PRODUCT_REVIEW) {
+  //   return {
+  //     ...state,
+  //     currentProductReviews: action.payload,
+  //   };
+  // }s
+  else if (action.type === UPDATE_CART) {
     return {
       ...state,
       cart: [...action.payload.cart],

@@ -9,14 +9,20 @@ const {
   productReview,
   getAllReviews,
   deleteReview,
+  rankProducts,
+  getRankedProducts,
+  getAllProducts,
 } = require('../controllers/productController.js');
 
 const { protectRoutes, authorizeRole } = require('../middleware/auth.js');
 
+router.route('/products/all').get(getAllProducts);
 router.route('/products').get(getProducts);
 router.route('/product/:id').get(getSingleProduct);
+router.route('/rank').get(getRankedProducts);
+router.route('/product/rank/:id').get(rankProducts);
 router.route('/product/review').post(protectRoutes, productReview);
-router.route('/review').get(protectRoutes, getAllReviews);
+router.route('/review').get(getAllReviews);
 router.route('/review').delete(protectRoutes, deleteReview);
 
 //!admin access only
