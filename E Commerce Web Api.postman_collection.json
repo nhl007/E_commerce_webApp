@@ -1,0 +1,801 @@
+{
+	"info": {
+		"_postman_id": "cd68404f-270e-402b-bb0f-78e82ddc0850",
+		"name": "E Commerce Web Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19982487"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "get all product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/products/all",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all product with search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/products?price=[{gte:200}]",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products"
+							],
+							"query": [
+								{
+									"key": "price",
+									"value": "[{gte:200}]"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update ranking of a product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/product/rank/6461618992c63fa790b5aa88?update=sales",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"product",
+								"rank",
+								"6461618992c63fa790b5aa88"
+							],
+							"query": [
+								{
+									"key": "update",
+									"value": "sales"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get ranked products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/product/rank",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"product",
+								"rank"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all review of a product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/review?id=645be95f4604d8424cf0d0f4",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"review"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "645be95f4604d8424cf0d0f4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete review of a product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/review?productId=63446c1457bd6c6044d03ceb&id=634d733858dc077297c4e775",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"review"
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "63446c1457bd6c6044d03ceb"
+								},
+								{
+									"key": "id",
+									"value": "634d733858dc077297c4e775"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a single product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/product/6340c76808c42b87b8fab3c7",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"product",
+								"6340c76808c42b87b8fab3c7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product review",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rating\":\"4\",\r\n    \"comment\":\"nice \",\r\n    \"productId\":\"634437e7ebd6106405276c6e\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/product/review",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"product",
+								"review"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "get all my orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/orders/me",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a single order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/order/634839d125e4750ba87bb033",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"order",
+								"634839d125e4750ba87bb033"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create new order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"orderedItems\":[{\r\n        \"product\":\"6340c76808c42b87b8fab3c7\",\r\n        \"name\":\"nihal\",\r\n        \"price\":200,\r\n        \"image\":\"cloudinary.com\",\r\n        \"quantity\":1\r\n    }],\r\n    \"shippingInfo\":{\r\n        \"address\":\"Laptop\",\r\n        \"city\":\"nihal\",\r\n        \"phone\":200,\r\n        \"postalCode\":\"cloudinary.com\",\r\n        \"country\":\"Bd\"\r\n    },\r\n    \"itemsPrice\":\"100\",\r\n    \"taxPrice\":\"30\",\r\n    \"shippingPrice\":\"20\",\r\n    \"totalPrice\":\"200\",\r\n    \"paymentInfo\":{\r\n        \"id\":\"sksksksk\",\r\n        \"status\":\"success\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/order/new",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"order",
+								"new"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Authentication",
+			"item": [
+				{
+					"name": "register user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"john\",\r\n    \"email\":\"john@gmail.com\",\r\n    \"password\":\"secret\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/register",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sign in user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"john@gmail.com\",\r\n    \"password\":\"secret\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/sign-in",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forget password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"john@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/password/forgot",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"password",
+								"forgot"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "set new password",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\":\"nihal111\",\r\n    \"passwordConfirm\":\"nihal111\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/reset/684e41001a1fad52a2c1756c0f24ccc577ea7196",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reset",
+								"684e41001a1fad52a2c1756c0f24ccc577ea7196"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "log out user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/logout",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "profile",
+			"item": [
+				{
+					"name": "user profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/me",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "password update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\":\"secret000\",\r\n    \"password\":\"secret\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/password/update",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"password",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user profile",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"John to Peter\",\r\n    \"email\":\"peter@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/me/update",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"me",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "get all user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/admin/users",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get an users detail",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\":\"secret000\",\r\n    \"password\":\"secret\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/admin/users/:id",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user profile from admin",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"John to Peter\",\r\n    \"email\":\"peter@gmail.com\",\r\n    \"role\":\"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/admin/users/63449902cf374396807fe25a",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"users",
+								"63449902cf374396807fe25a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete an user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/admin/users/63449902cf374396807fe25a",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"users",
+								"63449902cf374396807fe25a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ratings\":\"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/admin/product/6340c1fe8f8ed418db0b968f",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"product",
+								"6340c1fe8f8ed418db0b968f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/admin/product/6340c1fe8f8ed418db0b968f",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"product",
+								"6340c1fe8f8ed418db0b968f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create new product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"John\",\r\n    \"description\":\"this is a test Product user id\",\r\n    \"seller\":\"Apple \",\r\n    \"price\":\"30\",\r\n    \"category\":\"Laptop\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/admin/product/new",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"product",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin  delete order",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/admin/orders/634839b82c7bde153c444270",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"orders",
+								"634839b82c7bde153c444270"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin update order",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\":\"delivered\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/admin/orders/6340c1fe8f8ed418db0b968f",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"orders",
+								"6340c1fe8f8ed418db0b968f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin get all orders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ratings\":\"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/v1/admin/orders",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
