@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { NavBar, Footer, Alert } from '../components';
-import { cartIcon, controller, headphone, jbl, tv } from '../assets';
-import { PencilIcon } from '@heroicons/react/24/outline';
+import { cartIcon } from '../assets';
 import { useAuthContext } from '../contexts/auth/AuthContext';
 import axios from 'axios';
 import { useFeatureContext } from '../contexts/feature/FeatureContext';
+import { useProductContext } from '../contexts/product/productContext';
 
 const ProductPage = () => {
+  const { addToCart } = useProductContext();
   const navigate = useNavigate();
 
   const { user } = useAuthContext();
@@ -110,37 +111,33 @@ const ProductPage = () => {
         Category {'>'} {product?.category}
       </p>
       <div className='flex sm:flex-col mt-20 sm:mt-10 gap-20 sm:gap-10'>
-        <div className=' max-w-[400px] h-[auto]'>
+        <div className=' max-w-[30rem] h-auto'>
           <img
-            src={currentImage ? currentImage : product?.images[0].url}
+            src={currentImage ? currentImage : product?.images[0]?.url}
             alt='product'
           />
         </div>
-        <div className=' flex flex-col justify-start gap-4 sm:gap-10'>
-          <p className=' text-[2.4rem] font-clash600'>{product?.name}</p>
+        <div className=' flex flex-col justify-start gap-10'>
+          <p className=' text-[3.2rem] font-clash600'>{product?.name}</p>
           <div className=' flex mt-4 gap-4 items-center'>
-            <div
-              className=' max-w-[100px] h-auto'
-              onClick={() => setCurrentImage(product?.images[0].url)}
-            >
-              <img src={product?.images[0].url} />
-            </div>
-            <div
-              className=' max-w-[100px] h-auto'
-              onClick={() => setCurrentImage(jbl)}
-            >
-              <img src={jbl} />
-            </div>
-            <div className=' max-w-[100px] h-auto'>
-              <img src={headphone} />
-            </div>
+            {product?.images?.map((image, index) => {
+              return (
+                <div
+                  key={index}
+                  className=' max-w-[10rem] h-auto'
+                  onClick={() => setCurrentImage(image.url)}
+                >
+                  <img src={image.url} />
+                </div>
+              );
+            })}
           </div>
-          <p className=' text-[2.4rem]'>{product?.description}</p>
-          <p className=' text-[2.4rem]'>In Stock : {product?.stock}</p>
+          <p className=' text-[2rem]'>{product?.description}</p>
+          <p className=' text-[2rem]'>In Stock : {product?.stock}</p>
           <p className=' text-[2.4rem] font-clash600'>
             Price : {product?.price}$
           </p>
-          <button>
+          <button onClick={() => addToCart(productId)}>
             <img src={cartIcon} width={40} />
           </button>
         </div>
@@ -150,7 +147,7 @@ const ProductPage = () => {
       </p>
       <div className=' w-full h-[1px]  bg-font1 my-6' />
 
-      {productReviews
+      {productReviews?.length
         ? productReviews?.map((review, index) => {
             return (
               <div

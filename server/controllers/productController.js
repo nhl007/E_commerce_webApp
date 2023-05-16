@@ -6,6 +6,24 @@ const apiFeatures = require('../utils/apiFeatures');
 
 const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 
+const productDetails = require('../SeedDB/createProduct');
+
+//? test seeding db
+exports.seedDbCreate = catchAsyncErrors(async (req, res, next) => {
+  productDetails.forEach(async (p) => {
+    p.user = req.user.id;
+    const product = await Product.create(p);
+
+    await Ranking.create({
+      views: 0,
+      sales: 0,
+      product: product._id,
+    });
+  });
+
+  return res.status(201).json({ success: true });
+});
+
 //! create a new Product
 exports.newProduct = catchAsyncErrors(async (req, res, next) => {
   req.body.user = req.user.id;
@@ -40,9 +58,11 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
 //!get all product except the ranked products
 
 exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
-  const rankedProducts = await Ranking.find({}, 'product').sort({
-    rank: -1,
-  });
+  const rankedProducts = await Ranking.find({}, 'rank product')
+    .sort({
+      rank: -1,
+    })
+    .limit(10);
 
   const products = await Product.find({
     _id: { $nin: rankedProducts.map((p) => p.product) },
@@ -94,7 +114,7 @@ exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
 
   const rankingModel = await Ranking.findOne({ product: product._id });
 
-  rankingModel.deleteOne(rankingModel._id);
+  rankingModel.remove();
 
   await product.remove();
 
@@ -204,42 +224,52 @@ exports.rankProducts = catchAsyncErrors(async (req, res, next) => {
 
   let data = null;
 
-  if (rankBy === 'views') {
-    data = {
-      views: rank.views + 1,
-      rank: rank.sales * 5 + (rank.views + 1),
-    };
-  } else {
+  if (rankBy) {
     data = {
       sales: rank.sales + 1,
       rank: (rank.sales + 1) * 5 + rank.views,
     };
+  } else {
+    data = {
+      views: rank.views + 1,
+      rank: rank.sales * 5 + (rank.views + 1),
+    };
   }
 
-  const resp = await Ranking.findOneAndUpdate({ _id: rank._id }, data, {
+  await Ranking.findOneAndUpdate({ _id: rank._id }, data, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
   });
 
-  console.log(resp);
+  await Product.findOneAndUpdate(
+    { _id: rank.product },
+    { rank: data.rank },
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  );
 
   res.status(200).json({
     success: true,
-    message: 'Update Successfully!',
+    message: 'Updated Successfully!',
   });
 });
 
 exports.getRankedProducts = catchAsyncErrors(async (req, res, next) => {
-  const ranked = await Ranking.find({}, 'product').sort({ rank: -1 }).limit(10);
+  const ranked = await Ranking.find({}, 'product rank')
+    .sort({ rank: -1 })
+    .limit(10);
 
   const products = await Product.find({
     _id: ranked.map((p) => p.product),
-  });
+  }).sort({ rank: -1 });
 
   res.status(200).json({
     success: true,
-    message: 'Update Successfully!',
+    message: 'Success',
     products: products,
   });
 });

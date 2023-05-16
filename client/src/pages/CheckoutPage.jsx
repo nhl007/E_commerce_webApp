@@ -27,13 +27,18 @@ const CheckoutPage = ({ products, setShow, total }) => {
   const createANewOrder = async (order) => {
     await axios
       .post(`${apiUrl}/order/new`, order, config)
-      .then((res) => {
+      .then(async (res) => {
         setShow((prev) => !prev);
         if (res.data.success) {
           displayAlert('Successfully created order!');
+          await axios
+            .get(`${apiUrl}/product/rank/${id}?update=views`)
+            .catch((err) => {
+              console.log(err);
+            });
         }
       })
-      .catch((err) => {
+      .catch(() => {
         displayAlert('Error Occurred!', false);
       });
   };

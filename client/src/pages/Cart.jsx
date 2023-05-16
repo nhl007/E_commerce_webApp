@@ -6,9 +6,11 @@ import { TrashIcon } from '@heroicons/react/24/outline';
 import CheckoutPage from './CheckoutPage';
 import Card from './Homepage/components/Card';
 import { useFeatureContext } from '../contexts/feature/FeatureContext';
+import { useAuthContext } from '../contexts/auth/AuthContext';
 
 const Cart = () => {
   const { cart, removeFromCart } = useProductContext();
+  const { user } = useAuthContext();
   const { showAlert } = useFeatureContext();
   const [total, setTotal] = useState(0);
   const [checkout, setCheckout] = useState(false);
@@ -66,7 +68,7 @@ const Cart = () => {
                   <Card
                     key={index}
                     id={item._id}
-                    image={headphone}
+                    image={item.images[0].url}
                     heading={item.name}
                     description={item.description}
                     price={item.price}
@@ -100,12 +102,16 @@ const Cart = () => {
         </div>
         <div className=' h-[1px] w-full bg-font5 mt-4' />
         <div className=' flex sm:flex-col sm:gap-[1.6rem] justify-between mt-[1.8rem]'>
-          <button
-            onClick={() => setCheckout(true)}
-            className=' sm:order-2 bg-green2 text-[2.4rem] px-[1.6rem] py-[1rem] rounded-[.5rem]'
-          >
-            CheckOut
-          </button>
+          {user ? (
+            <button
+              onClick={() => setCheckout(true)}
+              className=' sm:order-2 bg-green2 text-[2.4rem] px-[1.6rem] py-[1rem] rounded-[.5rem]'
+            >
+              CheckOut
+            </button>
+          ) : (
+            'Please Log In to Order this product'
+          )}
           <p className=' text-[2.4rem]'>Total : {total} $</p>
         </div>
       </div>

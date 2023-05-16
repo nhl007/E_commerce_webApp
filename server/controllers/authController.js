@@ -5,7 +5,6 @@ const sendToken = require('../utils/sendToken');
 const sendEmail = require('../utils/sendEmail');
 
 const Crypto = require('crypto');
-const { info } = require('console');
 
 //! register user
 const registerUser = catchAsyncErrors(async (req, res, next) => {

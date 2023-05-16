@@ -10,6 +10,7 @@ import {
 } from './actions';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import { useFeatureContext } from '../feature/FeatureContext';
+import { useNavigate } from 'react-router-dom';
 
 const productContext = React.createContext();
 
@@ -45,6 +46,8 @@ const initialState = {
 };
 
 const ProductProvider = ({ children }) => {
+  const navigate = useNavigate();
+
   const [state, dispatch] = useReducer(reducer, initialState);
   const apiUrl = import.meta.env.VITE_API_URL;
   const config = {
@@ -60,6 +63,25 @@ const ProductProvider = ({ children }) => {
   }, []);
 
   const addToCart = (id) => {
+    if (!state.cart.length) {
+      CartAddAction(id);
+    } else {
+      let isSaved = false;
+      state.cart?.map((item) => {
+        if (item._id === id) {
+          isSaved = true;
+        }
+      });
+      if (!isSaved) {
+        CartAddAction(id);
+        displayAlert('Item added to cart !');
+      } else {
+        displayAlert('The item is already in the cart!', false);
+      }
+    }
+  };
+
+  const CartAddAction = (id) => {
     axios
       .get(`${apiUrl}/product/${id}`)
       .then((data) => {
@@ -79,6 +101,13 @@ const ProductProvider = ({ children }) => {
       });
   };
 
+  const cardClickEvent = async (id) => {
+    await axios.get(`${apiUrl}/product/rank/${id}`).catch((err) => {
+      console.log(err);
+    });
+    navigate(`/products/${id}`);
+  };
+
   const removeFromCart = (id) => {
     const cart = [...state.cart];
     const updatedCart = cart.filter((item) => item._id !== id);
@@ -92,9 +121,9 @@ const ProductProvider = ({ children }) => {
     });
   };
 
-  const getAllProducts = () => {
-    axios
-      .get(`${apiUrl}/products`)
+  const getAllProducts = async () => {
+    await axios
+      .get(`${apiUrl}/products/all`)
       .then((data) => {
         dispatch({
           type: SET_ALL_PRODUCTS,
@@ -201,6 +230,7 @@ const ProductProvider = ({ children }) => {
         adminDeleteAProduct,
         createNewProduct,
         onSearch,
+        cardClickEvent,
       }}
     >
       {children}

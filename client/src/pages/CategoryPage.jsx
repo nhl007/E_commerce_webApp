@@ -29,7 +29,7 @@ const CategoryPage = () => {
       <NavBar />
       <div className=' flex sm:flex-col mt-[4rem] gap-[3rem]'>
         <Category current={category} />
-        <div className=' flex flex-col w-full'>
+        <div className=' flex flex-col w-full justify-end'>
           <div className='w-full flex gap-[1rem] sm:gap-[.5rem] h-[3.5rem] justify-end sm:justify-center items-center self-end'>
             <h1 className=' font-clash600  text-[2rem]'>Price Range : </h1>
             <input
@@ -45,18 +45,21 @@ const CategoryPage = () => {
               &lt;
             </span>
 
-            <span className='font-clash600  text-[2rem] w-[8.9rem]'>
+            <span className='font-clash600  text-[2rem] w-[8.3rem]'>
               {range + ' $'}
             </span>
             {/* </p> */}
           </div>
+          <p className=' self-end sm:self-center mr-[.2rem]'>
+            Total {totalProd} product found
+          </p>
 
-          <div className=' w-full flex-wrap sm:flex-nowrap sm:overflow-x-scroll flex gap-[1rem] mt-[3.2rem]'>
+          <div className='flex flex-wrap sm:flex-nowrap sm:overflow-x-scroll  gap-[1rem] mt-[3.2rem] '>
             {products?.map((product, index) => {
               return (
                 <Card
                   key={index}
-                  image={headphone}
+                  image={product.images[0].url}
                   heading={product.name}
                   description={product.description}
                   price={product.price}

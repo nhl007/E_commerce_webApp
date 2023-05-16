@@ -5,13 +5,14 @@ import { useProductContext } from '../../../contexts/product/productContext';
 
 const AllProducts = () => {
   const { products } = useProductContext();
+
   const Products = useMemo(() => {
     return products?.map((p, index) => {
       return (
         <Card
           key={index}
           id={p._id}
-          image={p.images[0].url}
+          image={p?.images[0]?.url || headphone}
           heading={p.name}
           description={p.description}
           price={p.price}

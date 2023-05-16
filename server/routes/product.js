@@ -12,6 +12,7 @@ const {
   rankProducts,
   getRankedProducts,
   getAllProducts,
+  seedDbCreate,
 } = require('../controllers/productController.js');
 
 const { protectRoutes, authorizeRole } = require('../middleware/auth.js');
@@ -33,5 +34,11 @@ router
   .route('/admin/product/:id')
   .put(protectRoutes, authorizeRole('admin'), updateProduct)
   .delete(protectRoutes, authorizeRole('admin'), deleteProduct);
+
+//?test rotes
+
+router.route('/test').get(protectRoutes, authorizeRole('admin'), seedDbCreate);
+
+//?test rotes
 
 module.exports = router;
