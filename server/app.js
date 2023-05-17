@@ -20,7 +20,9 @@ const whitelist = [
   'http://localhost:5173',
   'https://localhost:5173',
   'http://localhost:3000',
+  process.env.WHITELIST,
 ];
+console.log(whitelist);
 
 const corsOptions = {
   credentials: true,
