@@ -6,6 +6,7 @@ const sendToken = (user, res, statusCode) => {
     const cookieOptions = {
       httpOnly: true,
       maxAge: sevenDay,
+      sameSite: 'None',
       secure: true,
     };
     res.cookie('token', token, cookieOptions);
