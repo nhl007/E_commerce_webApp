@@ -37,7 +37,7 @@ router
 
 //?test rotes
 
-router.route('/test').get(protectRoutes, authorizeRole('admin'), seedDbCreate);
+// router.route('/test').get(protectRoutes, authorizeRole('admin'), seedDbCreate);
 
 //?test rotes
 

@@ -6,23 +6,23 @@ const apiFeatures = require('../utils/apiFeatures');
 
 const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 
-const productDetails = require('../SeedDB/createProduct');
+// const productDetails = require('../SeedDB/createProduct');
 
 //? test seeding db
-exports.seedDbCreate = catchAsyncErrors(async (req, res, next) => {
-  productDetails.forEach(async (p) => {
-    p.user = req.user.id;
-    const product = await Product.create(p);
+// exports.seedDbCreate = catchAsyncErrors(async (req, res, next) => {
+//   productDetails.forEach(async (p) => {
+//     p.user = req.user.id;
+//     const product = await Product.create(p);
 
-    await Ranking.create({
-      views: 0,
-      sales: 0,
-      product: product._id,
-    });
-  });
+//     await Ranking.create({
+//       views: 0,
+//       sales: 0,
+//       product: product._id,
+//     });
+//   });
 
-  return res.status(201).json({ success: true });
-});
+//   return res.status(201).json({ success: true });
+// });
 
 //! create a new Product
 exports.newProduct = catchAsyncErrors(async (req, res, next) => {
