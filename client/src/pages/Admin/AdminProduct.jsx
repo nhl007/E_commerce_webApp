@@ -2,7 +2,7 @@ import { NavBar, Alert, Footer } from '../../components';
 import { useFeatureContext } from '../../contexts/feature/FeatureContext';
 import { useProductContext } from '../../contexts/product/productContext';
 import { TrashIcon, PencilIcon } from '@heroicons/react/24/outline';
-import { headphone } from '../../assets';
+// import { headphone } from '../../assets';
 import { useEffect, useState } from 'react';
 import ModalNewProduct from './ModalNewProduct';
 import Pagination from '../../components/Pagination';

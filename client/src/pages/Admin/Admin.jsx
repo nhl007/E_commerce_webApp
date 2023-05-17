@@ -1,8 +1,12 @@
 import React from 'react';
 import NavBar from '../../components/NavBar';
-import { headphone } from '../../assets';
 import Footer from '../../components/Footer';
 import { Link } from 'react-router-dom';
+import {
+  CircleStackIcon,
+  ShoppingBagIcon,
+  UserIcon,
+} from '@heroicons/react/24/outline';
 
 const Admin = () => {
   return (
@@ -18,7 +22,7 @@ const Admin = () => {
             className='flex flex-col justify-center items-center gap-[1.6rem]'
           >
             <div className=' max-w-[30rem] h-auto'>
-              <img alt='user' src={headphone} />
+              <UserIcon className=' text-green1 w-full' />
             </div>
             <h1 className=' font-clash600 text-[2.4rem]'>Users</h1>
           </Link>
@@ -27,7 +31,7 @@ const Admin = () => {
             className='flex flex-col justify-center items-center gap-[1.6rem]'
           >
             <div className=' max-w-[30rem] h-auto'>
-              <img alt='user' src={headphone} />
+              <CircleStackIcon className=' text-green1 w-full' />
             </div>
             <h1 className=' font-clash600 text-[2.4rem]'>Products</h1>
           </Link>
@@ -36,7 +40,7 @@ const Admin = () => {
             className='flex flex-col justify-center items-center gap-[1.6rem]'
           >
             <div className=' max-w-[30rem] h-auto'>
-              <img alt='user' src={headphone} />
+              <ShoppingBagIcon className=' text-green1 w-full' />
             </div>
             <h1 className=' font-clash600 text-[2.4rem]'>Orders</h1>
           </Link>

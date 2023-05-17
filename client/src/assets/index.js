@@ -5,7 +5,7 @@
 // import headphone from './headphone.png';
 // import hero from './hero.png';
 // import jbl from './jbl.png';
-// import phone from './phone.png';
+import phone from './phone.png';
 // import tv from './tv.png';
 
 // import adPhone from './ad-phone.png';
@@ -46,11 +46,11 @@ export {
   supportIcon,
   // featured,
   // jbl,
-  // phone,
+  phone,
   // tv,
   // ad1,
   // ad2,
-  adPhone,
+  // adPhone,
   mailIcon,
   signin,
 };

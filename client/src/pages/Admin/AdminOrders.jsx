@@ -1,7 +1,7 @@
 import { NavBar, Alert } from '../../components';
 import { useFeatureContext } from '../../contexts/feature/FeatureContext';
 import { TrashIcon, PencilIcon, TicketIcon } from '@heroicons/react/24/outline';
-import { headphone } from '../../assets';
+// import { headphone } from '../../assets';
 import { useEffect, useState } from 'react';
 import ModalNewProduct from './ModalNewProduct';
 import axios from 'axios';

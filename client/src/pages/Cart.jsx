@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavBar, Footer, Alert } from '../components';
 import { useProductContext } from '../contexts/product/productContext';
-import { headphone } from '../assets';
+// import { headphone } from '../assets';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import CheckoutPage from './CheckoutPage';
 import Card from './Homepage/components/Card';
