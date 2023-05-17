@@ -19,7 +19,7 @@ import { ProtectedRoute } from './components';
 
 const App = () => {
   return (
-    <div className=' w-full overflow-hidden lg:px-[4rem] xl:px-[12rem] sm:px-[1rem] mt-8 sm:mt-[3rem]'>
+    <div className='w-full overflow-hidden lg:px-[4rem] xl:px-[12rem] sm:px-[1rem] mt-8 sm:mt-[3rem]'>
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route exact path='/sign-in' element={<SignIn />} />

@@ -132,7 +132,6 @@ const AuthProvider = ({ children }) => {
       .put(`${apiUrl}/${type}/update`, data, config)
       .then((res) => {
         const { user } = res.data;
-        console.log(user);
         setLocalStorage(state.token, user);
         dispatch({
           type: UPDATE_USER,
@@ -141,7 +140,9 @@ const AuthProvider = ({ children }) => {
             role: user.roles,
           },
         });
-        displayAlert(res.data.message);
+        displayAlert(
+          (type === 'me' ? 'Profile' : 'Password') + ' updated successfully!'
+        );
       })
       .catch((err) => {
         displayAlert(err.response.data.message, false);

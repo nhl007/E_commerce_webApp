@@ -46,7 +46,7 @@ const ProductPage = () => {
         setProductReviews(() => reviews);
         if (user) {
           const isReviewed = reviews.find((review) => review.user === user._id);
-          console.log(isReviewed);
+
           setHasReviewed(() => isReviewed);
         }
       })

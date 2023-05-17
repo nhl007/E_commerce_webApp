@@ -3,7 +3,7 @@ import React, { useEffect, useReducer } from 'react';
 import { useContext } from 'react';
 import reducer from './reducer';
 import {
-  ADMIN_DELETE_PRODUCT,
+  // ADMIN_DELETE_PRODUCT,
   SET_ALL_PRODUCTS,
   SET_CURRENT_PRODUCT,
   UPDATE_CART,
@@ -23,8 +23,8 @@ const initialState = {
   cart: cart ? cart : [],
   totalCartProducts: cart.length ? cart.length : 0,
   totalProducts: 0,
-  totalPage: 0,
-  currentPage: 0,
+  totalPages: 1,
+  currentPage: 1,
   categories: [
     'Electronics',
     'Camera',
@@ -41,8 +41,6 @@ const initialState = {
     'Outdoor',
     'Home',
   ],
-  searchKeyword: '',
-  searchResult: null,
 };
 
 const ProductProvider = ({ children }) => {
@@ -58,9 +56,9 @@ const ProductProvider = ({ children }) => {
   const [cart, setCart] = useLocalStorage('cart', state.cart);
   const { displayAlert } = useFeatureContext();
 
-  useEffect(() => {
-    getAllProducts();
-  }, []);
+  // useEffect(() => {
+  //   getAllProducts();
+  // }, []);
 
   const addToCart = (id) => {
     if (!state.cart.length) {
@@ -95,6 +93,11 @@ const ProductProvider = ({ children }) => {
             total: updatedCart.length,
           },
         });
+
+        //?rank update
+        axios.get(`${apiUrl}/product/rank/${id}`).catch((err) => {
+          console.log(err);
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -121,15 +124,17 @@ const ProductProvider = ({ children }) => {
     });
   };
 
-  const getAllProducts = async () => {
+  const getAllProducts = async (page = 1) => {
     await axios
-      .get(`${apiUrl}/products/all`)
+      .get(`${apiUrl}/products/all?page=${page}`)
       .then((data) => {
         dispatch({
           type: SET_ALL_PRODUCTS,
           payload: {
             product: data.data.products,
             totalProducts: data.data.totalProducts,
+            totalPages: data.data.totalPages,
+            currentPage: data.data.currentPage,
           },
         });
       })
@@ -158,13 +163,14 @@ const ProductProvider = ({ children }) => {
     try {
       const data = await axios.delete(`${apiUrl}/admin/product/${id}`, config);
       const { product } = data.data;
-      dispatch({
-        type: ADMIN_DELETE_PRODUCT,
-        payload: {
-          id: product._id,
-        },
-      });
+      // dispatch({
+      //   type: ADMIN_DELETE_PRODUCT,
+      //   payload: {
+      //     id: product._id,
+      //   },
+      // });
       displayAlert(data.data.message);
+      return Promise.resolve(product);
     } catch (err) {
       displayAlert(err.response.data.message, false);
     }
@@ -172,12 +178,7 @@ const ProductProvider = ({ children }) => {
 
   const createNewProduct = async (values) => {
     try {
-      const data = await axios.post(
-        `${apiUrl}/admin/product/new`,
-        values,
-        config
-      );
-      getAllProducts();
+      await axios.post(`${apiUrl}/admin/product/new`, values, config);
       displayAlert('Successfully created a new product!');
     } catch (err) {
       displayAlert(err.response.data.message, false);

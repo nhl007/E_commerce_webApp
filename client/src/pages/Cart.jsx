@@ -46,9 +46,9 @@ const Cart = () => {
       {showAlert && <Alert />}
       <NavBar />
       <div className=' w-full flex justify-start sm:justify-center sm:items-center flex-col'>
-        <div className='text-3xl text-font1 font-clash600 mt-[3.2rem]'>
-          <h1>Cart Items </h1>
-        </div>
+        <h1 className='text-[3.2rem] leading-[4rem] text-font1 font-clash600 mt-[3.2rem]'>
+          Cart Items
+        </h1>
         <p className=' self-end my-2 text-2xl sm:hidden'>Sub Total</p>
         <div className=' h-[1px] w-full bg-font5 mb-4' />
         <div className='w-full gap-10 flex flex-col p-[10px] py-4 text-[20px]'>
@@ -101,8 +101,8 @@ const Cart = () => {
           )}
         </div>
         <div className=' h-[1px] w-full bg-font5 mt-4' />
-        <div className=' flex sm:flex-col sm:gap-[1.6rem] justify-between mt-[1.8rem]'>
-          {user ? (
+        <div className=' flex sm:flex-col sm:gap-[1.6rem] justify-between sm:justify-center sm:items-center mt-[1.8rem]'>
+          {user && cart.length ? (
             <button
               onClick={() => setCheckout(true)}
               className=' sm:order-2 bg-green2 text-[2.4rem] px-[1.6rem] py-[1rem] rounded-[.5rem]'
@@ -110,7 +110,11 @@ const Cart = () => {
               CheckOut
             </button>
           ) : (
-            'Please Log In to Order this product'
+            <p>
+              {cart.length
+                ? 'Please Log In to Order this product'
+                : 'Add product to cart first to checkout ! '}
+            </p>
           )}
           <p className=' text-[2.4rem]'>Total : {total} $</p>
         </div>
@@ -138,6 +142,7 @@ const Quantity = ({ setTotal, price, product, setOrderedProducts }) => {
           price: product.price,
           product: product._id,
           quantity: quantity,
+          image: product.images[0].url,
         },
       ];
     });

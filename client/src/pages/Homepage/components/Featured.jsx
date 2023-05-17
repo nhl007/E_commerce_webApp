@@ -48,8 +48,8 @@ const Featured = () => {
             <p>Top Deals</p>
           </div>
         </div>
-        <div className=' max-w-[70rem] px-[4.8rem] sm:px-[2.4rem] pt-[3.2rem] pb-[3.2rem] flex flex-col sm:gap-[1.6rem] __shadow rounded-[1rem] bg-whiteBg'>
-          <h1 className=' font-clash600 text-[4.8rem] leading-[5.9rem] text-font1 w-full max-h-[6.5rem] whitespace-wrap overflow-hidden overflow-ellipsis'>
+        <div className=' w-[70rem] sm:max-w-full px-[4.8rem] sm:px-[2.4rem] pt-[3.2rem] pb-[3.2rem] flex flex-col sm:gap-[1.6rem] __shadow rounded-[1rem] bg-whiteBg'>
+          <h1 className=' font-clash600 text-[4.8rem] sm:text-[3.2rem] leading-[5.9rem]  sm:leading-[4rem] text-font1 w-full max-h-[6.5rem] whitespace-wrap overflow-hidden overflow-ellipsis'>
             {featuredProducts[0]?.name}
           </h1>
           <div className=' flex gap-[4.8rem] h-[21.9rem]'>
@@ -120,7 +120,7 @@ const Featured = () => {
           </div>
         </div>
         <div className=' flex flex-col w-[40rem] sm:w-full self-end '>
-          <h1 className='max-w-[29.4rem] font-clash600 text-[4.8rem] leading-[5.9rem] text-font3'>
+          <h1 className='max-w-[29.4rem] font-clash600 text-[4.8rem] sm:text-[3.2rem] leading-[5.9rem]  sm:leading-[4rem] text-font3'>
             {featuredProducts[3]?.name}
           </h1>
           <h4 className=' mt-8 mb-[8rem] sm:mb-[2.4rem]'>

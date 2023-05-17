@@ -1,16 +1,54 @@
-import { NavBar, Alert } from '../../components';
+import { NavBar, Alert, Footer } from '../../components';
 import { useFeatureContext } from '../../contexts/feature/FeatureContext';
 import { useProductContext } from '../../contexts/product/productContext';
 import { TrashIcon, PencilIcon } from '@heroicons/react/24/outline';
 import { headphone } from '../../assets';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ModalNewProduct from './ModalNewProduct';
+import Pagination from '../../components/Pagination';
+import axios from 'axios';
 
 const AdminProduct = () => {
   const { showAlert } = useFeatureContext();
-  const { products, adminDeleteAProduct } = useProductContext();
+  const { adminDeleteAProduct } = useProductContext();
 
+  const [products, setProducts] = useState([]);
+  const [totalProducts, setTotalProducts] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [show, setShow] = useState(false);
+
+  const apiUrl = import.meta.env.VITE_API_URL;
+  // const config = {
+  //   withCredentials: true,
+  //   credentials: 'include',
+  // };
+
+  const getAllProducts = async (page = 1) => {
+    await axios
+      .get(`${apiUrl}/products?admin=true&page=${page}`)
+      .then((data) => {
+        const { totalProducts, currentPage, totalPages, products } = data.data;
+        setProducts(() => products);
+        setTotalPages(() => totalPages);
+        setTotalProducts(() => totalProducts);
+        setCurrentPage(() => currentPage);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const deleteProduct = async (id) => {
+    await adminDeleteAProduct(id);
+    const updatedProducts = products.filter((prod) => prod._id !== id);
+    setProducts([...updatedProducts]);
+  };
+
+  useEffect(() => {
+    getAllProducts();
+  }, []);
+
   return (
     <>
       <NavBar />
@@ -72,7 +110,12 @@ const AdminProduct = () => {
                     scope='row'
                     className='px-6 py-4 font-medium whitespace-nowrap'
                   >
-                    <img className='' src={headphone} width={48} height={48} />
+                    <img
+                      className=''
+                      src={product?.images[0]?.url}
+                      width={48}
+                      height={48}
+                    />
                   </th>
                   <td className='px-6 py-4'>{product.name}</td>
                   <td className='px-6 py-4 '>{product.description}</td>
@@ -85,9 +128,9 @@ const AdminProduct = () => {
                   </td>
                   <td className='px-6 py-4 '>
                     <button
-                      onClick={() => {
-                        adminDeleteproduct(product._id);
-                      }}
+                      // onClick={() => {
+                      //   adminDeleteproduct(product._id);
+                      // }}
                       className=' w-[80%] flex justify-center items-center'
                     >
                       <PencilIcon width={24} color='green' />
@@ -96,7 +139,7 @@ const AdminProduct = () => {
                   <td className='px-6 py-4 '>
                     <button
                       onClick={() => {
-                        adminDeleteAProduct(product._id);
+                        deleteProduct(product._id);
                       }}
                       className=' w-[80%] flex justify-center items-center'
                     >
@@ -108,7 +151,14 @@ const AdminProduct = () => {
             );
           })}
         </table>
+        <Pagination
+          currentPage={Number(currentPage)}
+          totalPage={Number(totalPages)}
+          getAllProducts={getAllProducts}
+          totalProducts={Number(totalProducts)}
+        />
       </div>
+      <Footer />
     </>
   );
 };

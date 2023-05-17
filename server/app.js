@@ -16,7 +16,11 @@ const app = express();
 
 //!middleware
 
-const whitelist = ['http://localhost:5173', 'https://localhost:5173'];
+const whitelist = [
+  'http://localhost:5173',
+  'https://localhost:5173',
+  'http://localhost:3000',
+];
 
 const corsOptions = {
   credentials: true,

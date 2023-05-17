@@ -1,7 +1,5 @@
-import React from 'react';
 import NavBar from '../../components/NavBar';
 import Featured from './components/Featured';
-import Recommended from './components/Recommended';
 import Banner from './components/Banner';
 import Footer from '../../components/Footer';
 import AllProducts from './components/AllProducts';
@@ -15,7 +13,6 @@ const Home = () => {
       {showAlert && <Alert />}
       <NavBar />
       <Featured />
-      <Recommended />
       <Banner />
       <AllProducts />
       <MemberShip />

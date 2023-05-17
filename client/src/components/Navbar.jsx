@@ -24,9 +24,12 @@ const NavBar = () => {
   };
   return (
     <nav className=' flex justify-between relative items-center'>
-      <h1 className=' font-clash600 text-font1 text-[3rem] sm:text-[2.4rem] leading-[39px] sm:leading-[3.2] sm:hidden'>
-        <Link to='/'>ASIF.MART</Link>
-      </h1>
+      <Link className='flex items-end sm:hidden' to='/'>
+        <img src={logo} width={20} />
+        <h1 className=' font-clash600 text-font1 text-[3rem] sm:text-[2.4rem] '>
+          .Mart
+        </h1>
+      </Link>
       <Link className=' hidden sm:flex' to='/'>
         <img src={logo} width={26} />
       </Link>
@@ -119,7 +122,7 @@ const NavBar = () => {
       </div>
       {mobileNav ? (
         <div className=' flex flex-col justify-center p-[2rem] absolute top-[4rem] right-0 bg-font3 text-green1 z-[999] gap-4'>
-          <div className='flex justify-center items-center gap-2'>
+          <div className='flex justify-start items-center gap-2'>
             <Link to='/cart' className=' flex items-center gap-2'>
               <ShoppingCartIcon width={24} className=' text-green1' /> Cart
             </Link>

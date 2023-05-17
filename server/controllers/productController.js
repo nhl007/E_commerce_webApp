@@ -48,6 +48,17 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
 
   const products = await feature.query;
 
+  if (req.query.admin) {
+    const totalProd = await Product.countDocuments();
+    return res.status(200).json({
+      success: true,
+      totalProducts: totalProd,
+      products,
+      currentPage: req.query.page,
+      totalPages: Math.ceil(totalProd / 10),
+    });
+  }
+
   res.status(200).json({
     success: true,
     totalProducts: products.length,
@@ -64,14 +75,23 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
     })
     .limit(10);
 
+  const currPage = Number(req.query.page) || 1;
+  const skip = 10 * (currPage - 1);
+
   const products = await Product.find({
     _id: { $nin: rankedProducts.map((p) => p.product) },
-  });
+  })
+    .skip(skip)
+    .limit(10);
+
+  const totalProducts = (await Product.countDocuments()) - 10;
 
   res.status(200).json({
     success: true,
-    totalProducts: products.length,
+    totalProducts: totalProducts,
     products,
+    currentPage: currPage,
+    totalPages: Math.ceil(totalProducts / 10),
   });
 });
 

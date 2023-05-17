@@ -56,52 +56,57 @@ const OrderPage = () => {
     <div>
       <NavBar />
       {showAlert && <Alert />}
-      <h1 className=' text-[3.2rem] font-clash600 my-[3.2rem] sm:my-[2rem] sm:text-[2rem]'>
+      <h1 className='text-[3.2rem] leading-[4rem] text-font1 font-clash600 mt-[3.2rem] sm:text-center mb-2'>
         Your Orders
       </h1>
+      <div className=' h-[1px] w-full bg-font5 mb-8' />
       <p className=' text-[2.4rem] sm:text-[1.6rem] font-clash600'>
         Total Orders : {totalOrders}
       </p>
-      <div className='sm:overflow-x-scroll'>
-        <div className=' flex flex-col gap-[2.4rem] sm:w-[250%] '>
-          <table className='w-full text-[1.6rem] sm:text-[1.2rem] text-left text-font5 mt-[2.4rem]'>
-            <thead className='text-[1.8rem] text-font5 uppercase bg-font4 '>
-              <tr className=' sm:text-[1.2rem]'>
-                <th scope='col' className='px-3 py-3   sm:py-1'>
-                  Status
-                </th>
-                <th scope='col' className='px-3 py-3   sm:py-1'>
-                  Product Info
-                </th>
-                <th scope='col' className='px-3 py-3   sm:py-1 '>
-                  Shipping Info
-                </th>
-                <th scope='col' className='px-3 py-3   sm:py-1 '>
-                  Total Price
-                </th>
-                <th scope='col' className='px-3 py-3   sm:py-1 '>
-                  Payment Status
-                </th>
-                <th scope='col' className='px-3 py-3   sm:py-1'>
-                  Order Date
-                </th>
-                <th scope='col' className='px-3 py-3   sm:py-1'>
-                  Cancel
-                </th>
-              </tr>
-            </thead>
-            {orders?.map((order, index) => {
-              return (
-                <OrderDetails
-                  key={index}
-                  order={order}
-                  deleteOrder={deleteOrder}
-                />
-              );
-            })}
-          </table>
+      {totalOrders ? (
+        <div className='sm:overflow-x-scroll'>
+          <div className=' flex flex-col gap-[2.4rem] sm:w-[250%] '>
+            <table className='w-full text-[1.6rem] sm:text-[1.2rem] text-left text-font5 mt-[2.4rem]'>
+              <thead className='text-[1.8rem] text-font5 uppercase bg-font4 '>
+                <tr className=' sm:text-[1.2rem]'>
+                  <th scope='col' className='px-3 py-3   sm:py-1'>
+                    Status
+                  </th>
+                  <th scope='col' className='px-3 py-3   sm:py-1'>
+                    Product Info
+                  </th>
+                  <th scope='col' className='px-3 py-3   sm:py-1 '>
+                    Shipping Info
+                  </th>
+                  <th scope='col' className='px-3 py-3   sm:py-1 '>
+                    Total Price
+                  </th>
+                  <th scope='col' className='px-3 py-3   sm:py-1 '>
+                    Payment Status
+                  </th>
+                  <th scope='col' className='px-3 py-3   sm:py-1'>
+                    Order Date
+                  </th>
+                  <th scope='col' className='px-3 py-3   sm:py-1'>
+                    Cancel
+                  </th>
+                </tr>
+              </thead>
+              {orders?.map((order, index) => {
+                return (
+                  <OrderDetails
+                    key={index}
+                    order={order}
+                    deleteOrder={deleteOrder}
+                  />
+                );
+              })}
+            </table>
+          </div>
         </div>
-      </div>
+      ) : (
+        <p className='mt-4'>No records found !</p>
+      )}
 
       <Footer />
     </div>
@@ -119,7 +124,7 @@ const OrderDetails = ({ order, deleteOrder }) => {
           {order.orderedItems?.map((item, index) => {
             return (
               <div key={index} className=' flex gap-[1.6rem] items-center my-4'>
-                <img src={headphone} width={40} height={40} />
+                <img src={item.image} width={40} height={40} />
                 <div className=' flex flex-col justify-center  gap-2'>
                   <p>{item.name}</p>
                   <p>

@@ -1,5 +1,5 @@
 import {
-  ADMIN_DELETE_PRODUCT,
+  // ADMIN_DELETE_PRODUCT,
   SET_ALL_PRODUCTS,
   SET_CURRENT_PRODUCT,
   // SET_CURRENT_PRODUCT_REVIEW,
@@ -12,6 +12,8 @@ const reducer = (state, action) => {
       ...state,
       products: action.payload.product,
       totalProducts: action.payload.totalProducts,
+      currentPage: action.payload.currentPage,
+      totalPages: action.payload.totalPages,
     };
   }
   if (action.type === SET_CURRENT_PRODUCT) {
@@ -32,16 +34,17 @@ const reducer = (state, action) => {
       cart: [...action.payload.cart],
       totalCartProducts: action.payload.total,
     };
-  } else if (action.type === ADMIN_DELETE_PRODUCT) {
-    const updatedProducts = state?.products.filter(
-      (prod) => prod._id !== action.payload.id
-    );
-    return {
-      ...state,
-      products: [...updatedProducts],
-      totalCartProducts: updatedProducts.length,
-    };
   }
+  // else if (action.type === ADMIN_DELETE_PRODUCT) {
+  //   const updatedProducts = state?.products.filter(
+  //     (prod) => prod._id !== action.payload.id
+  //   );
+  //   return {
+  //     ...state,
+  //     products: [...updatedProducts],
+  //     totalCartProducts: updatedProducts.length,
+  //   };
+  // }
 
   throw new Error(`no such action ${action.type}`);
 };

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { NavBar, Footer } from '../components';
+import { NavBar, Footer, Alert } from '../components';
 import { useProductContext } from '../contexts/product/productContext';
 import Card from './Homepage/components/Card';
-import { headphone } from '../assets';
-import { currencyFormatter } from '../utils/mathOperations';
 import Category from './Homepage/components/Category';
+import { useFeatureContext } from '../contexts/feature/FeatureContext';
 
 const CategoryPage = () => {
   const { category } = useParams();
   const { onSearch } = useProductContext();
+  const { showAlert } = useFeatureContext();
   const [products, setProducts] = useState(null);
   const [totalProd, setTotalProd] = useState(0);
   const [range, setRange] = useState(10000);
@@ -27,6 +27,7 @@ const CategoryPage = () => {
   return (
     <>
       <NavBar />
+      {showAlert && <Alert />}
       <div className=' flex sm:flex-col mt-[4rem] gap-[3rem]'>
         <Category current={category} />
         <div className=' flex flex-col w-full justify-end'>

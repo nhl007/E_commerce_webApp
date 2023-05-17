@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { logo, logoWhite, mailIcon } from '../assets';
+import { logo, mailIcon } from '../assets';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer className='flex mt-[12rem] sm:mt-[8rem] justify-center items-center pb-[9rem] sm:pb-[4.8rem]'>
       <div className='flex gap-[100px] sm:gap-[2.4rem] sm:flex-wrap justify-between'>
-        <div className='flex justify-center w-[full]'>
+        <div className='flex justify-center w-[full] mt-2'>
           <img
             className=' text-blue-700 w-[10rem] h-[6rem] sm:w-[5rem] sm:h-[3rem]'
             src={logo}

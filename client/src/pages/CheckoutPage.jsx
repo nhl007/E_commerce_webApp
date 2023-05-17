@@ -31,11 +31,13 @@ const CheckoutPage = ({ products, setShow, total }) => {
         setShow((prev) => !prev);
         if (res.data.success) {
           displayAlert('Successfully created order!');
-          await axios
-            .get(`${apiUrl}/product/rank/${id}?update=views`)
-            .catch((err) => {
-              console.log(err);
-            });
+          products.map((p) => {
+            axios
+              .get(`${apiUrl}/product/rank/${p.product}?update=sales`)
+              .catch((err) => {
+                console.log(err);
+              });
+          });
         }
       })
       .catch(() => {
@@ -50,7 +52,6 @@ const CheckoutPage = ({ products, setShow, total }) => {
       orderedItems: products,
       totalPrice: total,
     };
-
     await createANewOrder(data);
   };
 

@@ -7,7 +7,7 @@ import hero from './hero.png';
 import jbl from './jbl.png';
 import phone from './phone.png';
 import tv from './tv.png';
-import logo from './logo_main.webp';
+import logo from './logo_main.svg';
 
 import adPhone from './ad-phone.png';
 import ad1 from './ad1.png';
