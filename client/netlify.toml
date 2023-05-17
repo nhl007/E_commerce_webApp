@@ -1,0 +1,21 @@
+# Redirects
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers
+[[headers]]
+  # Enable CORS for all paths
+  for = "/*"
+    [headers.values]
+    Access-Control-Allow-Origin = "*"
+
+# Build settings
+[build]
+  # Choose your build command
+  command = "npm run build"
+
+  # Set the output directory
+  publish = "dist"

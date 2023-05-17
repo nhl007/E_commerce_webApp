@@ -1,7 +1,5 @@
 import React, { useContext, useReducer } from 'react';
 
-import reducer from './reducer';
-
 import {
   AUTH_SUCCESS_GOOGLE,
   AUTH_SUCCESS,
@@ -10,6 +8,8 @@ import {
   LOGOUT_USER,
   UPDATE_USER,
 } from './actions';
+
+import reducer from './reducer';
 
 import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import axios from 'axios';
