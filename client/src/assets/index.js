@@ -1,17 +1,17 @@
 //! images
 
-import controller from './controller.png';
-import featured from './featured.png';
-import headphone from './headphone.png';
-import hero from './hero.png';
-import jbl from './jbl.png';
-import phone from './phone.png';
-import tv from './tv.png';
-import logo from './logo_main.svg';
+// import controller from './controller.png';
+// import featured from './featured.png';
+// import headphone from './headphone.png';
+// import hero from './hero.png';
+// import jbl from './jbl.png';
+// import phone from './phone.png';
+// import tv from './tv.png';
 
-import adPhone from './ad-phone.png';
-import ad1 from './ad1.png';
-import ad2 from './ad2.png';
+// import adPhone from './ad-phone.png';
+// import ad1 from './ad1.png';
+// import ad2 from './ad2.png';
+import logo from './logo_main.svg';
 import signin from './signin.png';
 
 //! icons
@@ -31,10 +31,10 @@ import logoWhite from './logos/logo-white.svg';
 export {
   logoWhite,
   logo,
-  hero,
+  // hero,
   orderIcon,
-  controller,
-  headphone,
+  // controller,
+  // headphone,
   favIcon,
   cartIcon,
   accountIcon,
@@ -43,12 +43,12 @@ export {
   moneyIcon,
   searchIcon,
   supportIcon,
-  featured,
-  jbl,
-  phone,
-  tv,
-  ad1,
-  ad2,
+  // featured,
+  // jbl,
+  // phone,
+  // tv,
+  // ad1,
+  // ad2,
   adPhone,
   mailIcon,
   signin,
