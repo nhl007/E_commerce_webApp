@@ -160,7 +160,7 @@ const OrderDetails = ({ order, deleteOrder }) => {
           {order?.orderedItems?.map((item, index) => {
             return (
               <div key={index} className=' flex gap-[1.6rem] items-center my-4'>
-                <img src={item.image} width={40} height={40} />
+                <img src={item.image} width={40} height={40} alt='item.name' />
                 <div className=' flex flex-col justify-center  gap-2'>
                   <p>{item.name}</p>
                   <p>

@@ -111,6 +111,7 @@ const AdminProduct = () => {
                     className='px-6 py-4 font-medium whitespace-nowrap'
                   >
                     <img
+                      alt='p'
                       className=''
                       src={product?.images[0]?.url}
                       width={48}

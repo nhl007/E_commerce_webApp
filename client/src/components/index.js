@@ -5,6 +5,7 @@ import NavBar from './NavBar';
 import ProtectedRoute from './ProtectedRoute';
 import Search from './Search';
 import DropdownMenu from './DropDownMenu';
+import Loading from './Loading';
 
 export {
   Alert,
@@ -14,4 +15,5 @@ export {
   ProtectedRoute,
   Search,
   DropdownMenu,
+  Loading,
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { NavBar, Footer, Alert } from '../components';
+import { NavBar, Footer, Alert, Loading } from '../components';
 import { cartIcon } from '../assets';
 import { useAuthContext } from '../contexts/auth/AuthContext';
 import axios from 'axios';
@@ -12,7 +12,8 @@ const ProductPage = () => {
   const navigate = useNavigate();
 
   const { user } = useAuthContext();
-  const { displayAlert, showAlert } = useFeatureContext();
+  const { displayAlert, showAlert, isloading, setIsLoading } =
+    useFeatureContext();
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [productReviews, setProductReviews] = useState(null);
@@ -33,6 +34,7 @@ const ProductPage = () => {
         setProduct(() => product);
       })
       .catch(() => {
+        setIsLoading(false);
         displayAlert('No Product Found By This Id', false);
         return navigate('/');
       });
@@ -51,16 +53,24 @@ const ProductPage = () => {
         }
       })
       .catch(() => {
+        setIsLoading(false);
         displayAlert('Error Occurred', false);
       });
   };
 
+  const loadNecessaryResources = async () => {
+    setIsLoading(true);
+    await getASingleProduct();
+    await getProductReviews();
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    getASingleProduct();
-    getProductReviews();
+    loadNecessaryResources();
   }, [productId]);
 
   const delProductReview = async () => {
+    setIsLoading(true);
     await axios
       .delete(
         `${apiUrl}/review?productId=${productId}&id=${hasReviewed._id}`,
@@ -73,12 +83,14 @@ const ProductPage = () => {
       .catch(() => {
         displayAlert("Couldn't delete product review!", false);
       });
+    setIsLoading(false);
   };
 
   const [rating, setRating] = useState(1);
   const [comment, setComment] = useState('');
 
   const postReview = async () => {
+    setIsLoading(true);
     await axios
       .post(
         `${apiUrl}/product/review`,
@@ -101,18 +113,22 @@ const ProductPage = () => {
       .catch(() => {
         displayAlert("Couldn't save product review!", false);
       });
+    setIsLoading(false);
   };
 
   return (
     <>
-      <NavBar />
+      {isloading && <Loading />}
       {showAlert && <Alert />}
+      <NavBar />
       <p className=' mt-3 text-[1rem]'>
         Category {'>'} {product?.category}
       </p>
       <div className='flex sm:flex-col mt-20 sm:mt-10 gap-20 sm:gap-10'>
         <div className=' max-w-[30rem] h-auto'>
           <img
+            width={300}
+            height={300}
             src={currentImage ? currentImage : product?.images[0]?.url}
             alt='product'
           />
@@ -127,7 +143,7 @@ const ProductPage = () => {
                   className=' max-w-[10rem] h-auto'
                   onClick={() => setCurrentImage(image.url)}
                 >
-                  <img src={image.url} />
+                  <img src={image.url} alt='img' height={100} width={100} />
                 </div>
               );
             })}
@@ -138,7 +154,7 @@ const ProductPage = () => {
             Price : {product?.price}$
           </p>
           <button onClick={() => addToCart(productId)}>
-            <img src={cartIcon} width={40} />
+            <img alt='cart' src={cartIcon} width={40} height={32} />
           </button>
         </div>
       </div>

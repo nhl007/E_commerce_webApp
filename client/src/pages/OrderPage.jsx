@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { NavBar, Footer, Alert } from '../components';
+import { NavBar, Footer, Alert, Loading } from '../components';
 import axios from 'axios';
 // import { headphone } from '../assets';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { useFeatureContext } from '../contexts/feature/FeatureContext';
 
 const OrderPage = () => {
-  const { showAlert, displayAlert } = useFeatureContext();
+  const { showAlert, displayAlert, isloading, setIsLoading } =
+    useFeatureContext();
   const apiUrl = import.meta.env.VITE_API_URL;
   const config = {
     withCredentials: true,
@@ -17,6 +18,7 @@ const OrderPage = () => {
   const [totalOrders, setTotalOrders] = useState(0);
 
   const fetchOrders = async () => {
+    setIsLoading(true);
     try {
       const data = await axios.get(`${apiUrl}/orders/me`, config);
       const { order, totalOrders } = data.data;
@@ -24,10 +26,13 @@ const OrderPage = () => {
       setTotalOrders(() => Number(totalOrders));
     } catch (err) {
       displayAlert('Error Occurred', false);
+      setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
   const deleteOrder = async (id) => {
+    setIsLoading(true);
     await axios
       .delete(`${apiUrl}/admin/orders/${id}`, config)
       .then(() => {
@@ -38,6 +43,7 @@ const OrderPage = () => {
       .catch((err) => {
         displayAlert("Couldn't Cancel Order", false);
       });
+    setIsLoading(false);
   };
 
   // const updateOrder = async (id, data) => {
@@ -53,9 +59,10 @@ const OrderPage = () => {
   }, []);
 
   return (
-    <div>
-      <NavBar />
+    <>
+      {isloading && <Loading />}
       {showAlert && <Alert />}
+      <NavBar />
       <h1 className='text-[3.2rem] leading-[4rem] text-font1 font-clash600 mt-[3.2rem] sm:text-center mb-2'>
         Your Orders
       </h1>
@@ -109,7 +116,7 @@ const OrderPage = () => {
       )}
 
       <Footer />
-    </div>
+    </>
   );
 };
 
@@ -124,7 +131,7 @@ const OrderDetails = ({ order, deleteOrder }) => {
           {order.orderedItems?.map((item, index) => {
             return (
               <div key={index} className=' flex gap-[1.6rem] items-center my-4'>
-                <img src={item.image} width={40} height={40} />
+                <img alt={item.name} src={item.image} width={40} height={40} />
                 <div className=' flex flex-col justify-center  gap-2'>
                   <p>{item.name}</p>
                   <p>

@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { NavBar, Footer, Alert } from '../components';
-import { useProductContext } from '../contexts/product/productContext';
+import { NavBar, Footer, Alert, Loading } from '../../components';
+import { useProductContext } from '../../contexts/product/productContext';
 // import { headphone } from '../assets';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import CheckoutPage from './CheckoutPage';
-import Card from './Homepage/components/Card';
-import { useFeatureContext } from '../contexts/feature/FeatureContext';
-import { useAuthContext } from '../contexts/auth/AuthContext';
+import Card from '../Homepage/components/Card';
+import { useFeatureContext } from '../../contexts/feature/FeatureContext';
+import { useAuthContext } from '../../contexts/auth/AuthContext';
 
 const Cart = () => {
   const { cart, removeFromCart } = useProductContext();
   const { user } = useAuthContext();
-  const { showAlert } = useFeatureContext();
+  const { showAlert, isloading } = useFeatureContext();
   const [total, setTotal] = useState(0);
   const [checkout, setCheckout] = useState(false);
 
@@ -35,7 +35,9 @@ const Cart = () => {
   };
 
   return (
-    <div className=' w-full h-full'>
+    <>
+      {showAlert && <Alert />}
+      {isloading && <Loading />}
       {checkout ? (
         <CheckoutPage
           products={orderedProducts}
@@ -43,7 +45,6 @@ const Cart = () => {
           setShow={setCheckout}
         />
       ) : null}
-      {showAlert && <Alert />}
       <NavBar />
       <div className=' w-full flex justify-start sm:justify-center sm:items-center flex-col'>
         <h1 className='text-[3.2rem] leading-[4rem] text-font1 font-clash600 mt-[3.2rem]'>
@@ -120,7 +121,7 @@ const Cart = () => {
         </div>
       </div>
       <Footer />
-    </div>
+    </>
   );
 };
 

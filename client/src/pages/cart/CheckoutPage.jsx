@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { useFeatureContext } from '../contexts/feature/FeatureContext';
+import { useFeatureContext } from '../../contexts/feature/FeatureContext';
 
 const CheckoutPage = ({ products, setShow, total }) => {
   const { displayAlert } = useFeatureContext();
+  const { setIsLoading } = useFeatureContext();
   const shipping = {
     address: '',
     city: '',
@@ -25,6 +26,7 @@ const CheckoutPage = ({ products, setShow, total }) => {
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const createANewOrder = async (order) => {
+    setIsLoading(true);
     await axios
       .post(`${apiUrl}/order/new`, order, config)
       .then(async (res) => {
@@ -38,11 +40,14 @@ const CheckoutPage = ({ products, setShow, total }) => {
                 console.log(err);
               });
           });
+          setShow(() => false);
         }
       })
       .catch(() => {
         displayAlert('Error Occurred!', false);
+        setIsLoading(false);
       });
+    setIsLoading(false);
   };
 
   const onSubmit = async (e) => {
@@ -56,10 +61,10 @@ const CheckoutPage = ({ products, setShow, total }) => {
   };
 
   return (
-    <section className='w-full h-full flex justify-center items-center bg-[transparent] z-[999] fixed'>
+    <section className='ml-[-12rem] sm:ml-0 w-full h-full flex justify-center items-center bg-[transparent] z-[999] fixed'>
       <form
         onSubmit={onSubmit}
-        className='fixed bottom-0 p-[1.6rem] w-[40%] sm:ml-[-2rem] sm:w-[100%] flex flex-col bg-font4 text-font5 '
+        className='fixed bottom-0 p-[1.6rem] w-[60%] sm:ml-[-2rem] sm:w-[100%] flex flex-col bg-font4 text-font5 '
       >
         <button
           onClick={(e) => {

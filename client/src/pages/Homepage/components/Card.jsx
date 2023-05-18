@@ -46,7 +46,7 @@ const Card = ({
             </h1>
           </div>
           <div className='absolute max-w-[9rem] h-auto bottom-[1.2rem] right-[3.2rem]'>
-            <img src={image} />
+            <img src={image} width={80} height={80} alt='img' />
           </div>
         </div>
       </div>

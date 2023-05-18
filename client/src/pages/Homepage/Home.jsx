@@ -3,14 +3,15 @@ import Featured from './components/Featured';
 import Banner from './components/Banner';
 import Footer from '../../components/Footer';
 import AllProducts from './components/AllProducts';
-import { Alert } from '../../components';
+import { Alert, Loading } from '../../components';
 import { useFeatureContext } from '../../contexts/feature/FeatureContext';
 
 const Home = () => {
-  const { showAlert } = useFeatureContext();
+  const { showAlert, isloading } = useFeatureContext();
   return (
     <div className=' flex flex-col'>
       {showAlert && <Alert />}
+      {isloading && <Loading />}
       <NavBar />
       <Featured />
       <Banner />

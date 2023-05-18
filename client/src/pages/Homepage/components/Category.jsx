@@ -1,7 +1,7 @@
 import { useProductContext } from '../../../contexts/product/productContext';
 import { Link } from 'react-router-dom';
 import { TagIcon } from '@heroicons/react/24/outline';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 const Category = ({ current }) => {
   const { categories } = useProductContext();
@@ -16,7 +16,7 @@ const Category = ({ current }) => {
             category.toLowerCase() === current ? 'text-fontRed' : 'text-green1'
           }`}
         >
-          <TagIcon width={16} />
+          <TagIcon className='w-[1.6rem] h-auto' />
           {category}
         </Link>
       );
@@ -24,7 +24,7 @@ const Category = ({ current }) => {
   }, [categories]);
 
   return (
-    <div className=' max-w-[27.7rem] sm:max-w-[100%] h-[47rem] sm:h-auto rounded-[10px] __shadow bg-whiteBg pb-[4.8rem]'>
+    <div className=' max-w-[27.7rem] sm:max-w-[100%] max-h-[47rem] sm:h-auto rounded-[1rem] __shadow bg-whiteBg pb-[4.8rem]'>
       <h1 className=' text-center bg-green1 rounded-t-[10px] py-[6px] text-[1.6rem] font-clash600 text-font2 '>
         Category
       </h1>

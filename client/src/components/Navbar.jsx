@@ -24,21 +24,20 @@ const NavBar = () => {
   };
   return (
     <nav className=' flex justify-between relative items-center'>
-      <Link className='flex items-end sm:hidden' to='/'>
-        <img src={logo} width={20} />
-        <h1 className=' font-clash600 text-font1 text-[3rem] sm:text-[2.4rem] '>
+      <Link className='flex items-end' to='/'>
+        <div className='w-[2.4rem] h-auto'>
+          <img width={24} height={24} src={logo} alt='A' />
+        </div>
+        <h1 className=' font-clash600 text-font1 text-[3rem] sm:text-[2.4rem] sm:hidden '>
           .Mart
         </h1>
-      </Link>
-      <Link className=' hidden sm:flex' to='/'>
-        <img src={logo} width={26} />
       </Link>
       <Search />
       {/* //? desktop Navbar */}
       <div className=' flex gap-[28px] items-center justify-center sm:hidden'>
         <div className=' relative'>
           <Link to='/cart'>
-            <ShoppingCartIcon width={24} className=' text-green1' />
+            <ShoppingCartIcon className='w-[2.4rem] h-auto text-green1' />
           </Link>
           {totalCartProducts !== 0 ? (
             <span className=' text-xl text-fontRed absolute bottom-[-13px] right-[-13px]'>
@@ -51,7 +50,7 @@ const NavBar = () => {
         {user ? (
           <div className=' flex gap-[28px] items-center justify-center'>
             <Link to='/orders'>
-              <ShoppingBagIcon width={24} className=' text-green1' />
+              <ShoppingBagIcon className=' text-green1 w-[2.4rem] h-auto' />
             </Link>
             <button
               onMouseEnter={() => {
@@ -63,7 +62,7 @@ const NavBar = () => {
               className=' rounded-[50%] px-4 py-2  bg-green4 text-font2'
               to='profile'
             >
-              A
+              {user.name.charAt(0).toUpperCase()}
             </button>
           </div>
         ) : (
@@ -78,7 +77,7 @@ const NavBar = () => {
         )}
         {userType === 'admin' && (
           <Link to='/admin'>
-            <AdjustmentsVerticalIcon width={24} className=' text-green1' />
+            <AdjustmentsVerticalIcon className=' w-[2.4rem] h-auto text-green1' />
           </Link>
         )}
       </div>

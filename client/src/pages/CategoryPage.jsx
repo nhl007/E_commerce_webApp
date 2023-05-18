@@ -30,8 +30,8 @@ const CategoryPage = () => {
       {showAlert && <Alert />}
       <div className=' flex sm:flex-col mt-[4rem] gap-[3rem]'>
         <Category current={category} />
-        <div className=' flex flex-col w-full justify-end'>
-          <div className='w-full flex gap-[1rem] sm:gap-[.5rem] h-[3.5rem] justify-end sm:justify-center items-center self-end'>
+        <div className=' flex flex-col'>
+          <div className='flex gap-[1rem] sm:gap-[.5rem] h-[3.5rem] justify-end sm:justify-center items-center'>
             <h1 className=' font-clash600  text-[2rem]'>Price Range : </h1>
             <input
               type='range'

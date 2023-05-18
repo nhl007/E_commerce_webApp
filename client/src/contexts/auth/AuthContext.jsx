@@ -1,7 +1,7 @@
 import React, { useContext, useReducer } from 'react';
 
 import {
-  AUTH_SUCCESS_GOOGLE,
+  // AUTH_SUCCESS_GOOGLE,
   AUTH_SUCCESS,
   ADMIN_SAVE_ALL_USERS,
   ADMIN_DELETE_USER,
@@ -11,7 +11,7 @@ import {
 
 import reducer from './reducer';
 
-import { useGoogleLogin, googleLogout } from '@react-oauth/google';
+// import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import axios from 'axios';
 import { useFeatureContext } from '../feature/FeatureContext';
 
@@ -29,7 +29,7 @@ const initialState = {
 };
 
 const AuthProvider = ({ children }) => {
-  const { displayAlert } = useFeatureContext();
+  const { displayAlert, setIsLoading } = useFeatureContext();
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -54,40 +54,43 @@ const AuthProvider = ({ children }) => {
 
   //!-------------------------------
 
-  const googleLogin = useGoogleLogin({
-    onSuccess: async (token) => {
-      await axios
-        .get(
-          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${token.access_token}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token.access_token}`,
-              Accept: 'application/json',
-            },
-          }
-        )
-        .then((res) => {
-          const user = res.data;
-          setLocalStorage('user', user);
-          dispatch({
-            type: AUTH_SUCCESS_GOOGLE,
-            payload: {
-              user: user,
-            },
-          });
-          displayAlert('Successfully Logged in. Redirecting...');
-        })
-        .catch((err) => displayAlert(err.message, false));
-    },
-    onError: (errorResponse) => console.log(errorResponse),
-  });
+  // const googleLogin = useGoogleLogin({
+  //   onSuccess: async (token) => {
+  //     await axios
+  //       .get(
+  //         `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${token.access_token}`,
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${token.access_token}`,
+  //             Accept: 'application/json',
+  //           },
+  //         }
+  //       )
+  //       .then((res) => {
+  //         const user = res.data;
+  //         setLocalStorage('user', user);
+  //         dispatch({
+  //           type: AUTH_SUCCESS_GOOGLE,
+  //           payload: {
+  //             user: user,
+  //           },
+  //         });
+  //         displayAlert('Successfully Logged in.');
+  //       })
+  //       .catch((err) => displayAlert(err.message, false));
+  //   },
+  //   onError: (errorResponse) => console.log(errorResponse),
+  // });
 
-  const GoogleLogOut = () => {
-    googleLogout();
-    removeLocalStorage();
-  };
+  // const GoogleLogOut = () => {
+  //   googleLogout();
+  //   removeLocalStorage();
+  // };
+
+  //!---------------------------------------------------------------
 
   const registerLogin = async (data, type) => {
+    setIsLoading(true);
     await axios
       .post(
         `${apiUrl}/${type === 'register' ? 'register' : 'sign-in'}`,
@@ -104,18 +107,21 @@ const AuthProvider = ({ children }) => {
             user: user,
           },
         });
+        setIsLoading(false);
         displayAlert(
           type !== 'register'
-            ? 'Successfully Logged in! Redirecting...'
-            : 'Successfully Created an account! Redirecting..."'
+            ? 'Successfully Logged in !'
+            : 'Successfully Created an account !'
         );
       })
       .catch((err) => {
+        setIsLoading(false);
         displayAlert(err.response.data.message, false);
       });
   };
 
   const logout = async () => {
+    setIsLoading(true);
     await removeLocalStorage();
     await axios
       .get(`${apiUrl}/logout`, config)
@@ -123,14 +129,18 @@ const AuthProvider = ({ children }) => {
         dispatch({
           type: LOGOUT_USER,
         });
+        setIsLoading(false);
         displayAlert(res.data.message);
       })
       .catch((err) => {
+        setIsLoading(false);
         displayAlert(err.response.data.message, false);
       });
   };
 
   const updateProfile = async (type, data) => {
+    setIsLoading(true);
+
     await axios
       .put(`${apiUrl}/${type}/update`, data, config)
       .then((res) => {
@@ -150,6 +160,7 @@ const AuthProvider = ({ children }) => {
       .catch((err) => {
         displayAlert(err.response.data.message, false);
       });
+    setIsLoading(false);
   };
 
   const getAllUsersAdmin = async () => {
@@ -189,8 +200,8 @@ const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         ...state,
-        googleLogin,
-        GoogleLogOut,
+        // googleLogin,
+        // GoogleLogOut,
         registerLogin,
         logout,
         getAllUsersAdmin,

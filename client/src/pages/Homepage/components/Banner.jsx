@@ -3,7 +3,7 @@ import { phone } from '../../../assets';
 
 const Banner = () => {
   return (
-    <div className='lg:ml-[-4rem] xl:ml-[-12rem] sm:ml-0 px-[12rem] sm:px-0 w-[100vw] sm:w-full h-[25.1rem] sm:h-auto mt-[9.4rem] sm:mt-[4.8rem]  bg-greyBg flex justify-center mb-[8rem] sm:mb-[4.8rem]'>
+    <div className='lg:ml-[-4rem] xl:ml-[-12rem] sm:ml-[-1rem] px-[12rem] sm:px-[1rem] w-[100vw] sm:w-[100%+2rem] h-[25.1rem] sm:h-auto mt-[9.4rem] sm:mt-[4.8rem]  bg-greyBg flex justify-center mb-[8rem] sm:mb-[4.8rem]'>
       <div className='flex sm:flex-col w-full relative'>
         <div className=' flex flex-col pt-8 order-2'>
           <h1 className='font-clash600 text-[48px] sm:text-[3.2rem] sm:leading-[3.9rem] leading-[59px] text-font1 mb-4'>
@@ -16,8 +16,14 @@ const Banner = () => {
             $1,379.99
           </p>
         </div>
-        <div className='w-[570px] sm:w-full h-[309px] sm:h-auto bottom-0 right-0 absolute sm:static'>
-          <img className=' object-cover' alt='phone' src={phone} />
+        <div className='w-[57rem] sm:w-full h-[31rem] sm:h-auto bottom-0 right-0 absolute sm:static'>
+          <img
+            className=' object-cover'
+            alt='phone'
+            src={phone}
+            width={570}
+            height={319}
+          />
         </div>
       </div>
     </div>

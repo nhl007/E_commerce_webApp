@@ -7,7 +7,6 @@ import {
   Cart,
   ProductPage,
   Admin,
-  CheckoutPage,
   OrderPage,
   ProfilePage,
   CategoryPage,
@@ -19,7 +18,7 @@ import { ProtectedRoute } from './components';
 
 const App = () => {
   return (
-    <div className='w-full overflow-hidden lg:px-[4rem] xl:px-[12rem] sm:px-[1rem] mt-8 sm:mt-[3rem]'>
+    <div className='w-full overflow-hidden xxl:px-[1rem] lg:px-[4rem] xl:px-[12rem] sm:px-[1rem] pt-[2.4rem] sm:pt-[2.4rem]'>
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route exact path='/sign-in' element={<SignIn />} />
@@ -69,7 +68,7 @@ const App = () => {
         </Route>
         <Route exact path='/orders' element={<OrderPage />} />
         <Route exact path='/cart' element={<Cart />} />
-        <Route exact path='/checkout' element={<CheckoutPage />} />
+        {/* <Route exact path='/checkout' element={<CheckoutPage />} /> */}
         <Route path='/products/:productId' element={<ProductPage />} />
         <Route path='/category/:category' element={<CategoryPage />} />
 

@@ -34,7 +34,13 @@ const CardBig = ({ id, image, heading, description, price }) => {
             </h1>
           </div>
           <div className=' w-[8rem] h-auto m-auto'>
-            <img src={image} className=' object-cover' />
+            <img
+              width={80}
+              height={80}
+              src={image}
+              alt='f-img'
+              className=' object-cover'
+            />
           </div>
         </div>
       </div>

@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { logo, mailIcon } from '../assets';
+import { useFeatureContext } from '../contexts/feature/FeatureContext';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { displayAlert } = useFeatureContext();
 
   return (
     <footer className='flex mt-[12rem] sm:mt-[8rem] justify-center items-center pb-[9rem] sm:pb-[4.8rem]'>
@@ -11,6 +13,8 @@ const Footer = () => {
           <img
             className=' text-blue-700 w-[10rem] h-[6rem] sm:w-[5rem] sm:h-[3rem]'
             src={logo}
+            width={100}
+            height={60}
             alt='logo'
           />
         </div>
@@ -47,7 +51,12 @@ const Footer = () => {
               News letter
             </h2>
             <div className='w-full'>
-              <div>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  displayAlert('Thank you for subscribing !');
+                }}
+              >
                 <div className='flex justify-between mt-6 sm:mt-3'>
                   <label
                     htmlFor='mailNews'
@@ -55,13 +64,14 @@ const Footer = () => {
                   >
                     Enter your email address
                   </label>
-                  <img src={mailIcon} alt='mail' />
+                  <img width={24} height={24} src={mailIcon} alt='mail' />
                 </div>
+
                 <input
                   name='mailNews'
                   className=' border-[0px] border-b-2 w-full mt-5 focus:outline-none'
                 />
-              </div>
+              </form>
               <p className='w-full mt-[9rem] sm:mt-[4.8rem] text-center text-[1.2rem] leading-[2rem]'>
                 © {currentYear} ABC. All rights reserved.
               </p>

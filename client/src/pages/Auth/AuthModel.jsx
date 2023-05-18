@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { signin } from '../../assets';
+import { logo, signin } from '../../assets';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/auth/AuthContext';
 import { useFeatureContext } from '../../contexts/feature/FeatureContext';
 import Alert from '../../components/Alert';
+import { Loading } from '../../components';
 
 const AuthModel = ({ type }) => {
   const navigate = useNavigate();
-  const { showAlert, displayAlert } = useFeatureContext();
-  const { googleLogin, registerLogin, user } = useAuthContext();
+  const { showAlert, displayAlert, isloading } = useFeatureContext();
+  // const { googleLogin, registerLogin, user } = useAuthContext();
+  const { user, registerLogin } = useAuthContext();
 
   useEffect(() => {
     if (user) {
@@ -51,29 +53,40 @@ const AuthModel = ({ type }) => {
   };
 
   return (
-    <div className=' flex justify-center items-center min-h-[100vh] sm:px-4'>
-      {showAlert ? <Alert /> : null}
-      <div className=' flex justify-center items-center gap-[213px] sm:gap-0'>
-        <img
-          src={signin}
-          alt='authentication'
-          width={381}
-          height={385}
-          className=' object-cover sm:hidden'
-        />
-        <div className=' flex flex-col w-[40.3rem] sm:w-[32rem] '>
-          <h1 className=' font-clash700 text-[28px] leading-[42px]'>
-            {type === 'register'
-              ? 'Create an account.'
-              : 'Login to your account'}
-          </h1>
-          <p className='text-font5 leading-[24px]'>
-            {type === 'register'
-              ? " We'de love to have you on board. Join over 500+ customers around the globe and enhance productivity."
-              : ''}
-          </p>
-          {/* //todo :: google auth button */}
+    <>
+      {isloading && <Loading />}
+      {showAlert && <Alert />}
+      <div className=' flex justify-center items-center min-h-[100vh] sm:px-4'>
+        <div className=' flex justify-center items-center gap-[213px] sm:gap-0'>
+          <img
+            src={signin}
+            alt='authentication'
+            width={381}
+            height={385}
+            className=' object-cover sm:hidden'
+          />
+          <div className=' flex flex-col w-[40.3rem] sm:w-[32rem]  '>
+            <Link className='flex items-end self-center mb-8' to='/'>
+              <div className='w-[2.4rem] h-auto'>
+                <img src={logo} width={24} height={24} alt='A.Mart' />
+              </div>
+              <h1 className=' font-clash600 text-font1 text-[3rem] sm:text-[2.4rem] '>
+                .Mart
+              </h1>
+            </Link>
+            <h1 className=' font-clash700 text-[28px] leading-[42px]'>
+              {type === 'register'
+                ? 'Create an account.'
+                : 'Login to your account'}
+            </h1>
+            <p className='text-font5 leading-[24px]'>
+              {type === 'register'
+                ? " We'de love to have you on board. Join over 500+ customers around the globe and enhance productivity."
+                : ''}
+            </p>
 
+            {/* //todo :: google auth button */}
+            {/* 
           <button
             onClick={googleLogin}
             className=' flex justify-center items-center py-[12px] leading-6 text-font2 bg-font3 __input_auth mt-[44px]'
@@ -106,91 +119,92 @@ const AuthModel = ({ type }) => {
             {type === 'register'
               ? 'Sign Up with Google'
               : 'Sign in with Google'}
-          </button>
+          </button> */}
 
-          <div className=' __input_auth my-[44px]'></div>
+            <div className=' __input_auth my-[2.4rem]'></div>
 
-          <form onSubmit={onSubmit} className=' flex flex-col gap-6'>
-            {type === 'register' ? (
+            <form onSubmit={onSubmit} className=' flex flex-col gap-6'>
+              {type === 'register' ? (
+                <div className=' flex flex-col gap-[6px]'>
+                  <label htmlFor='name'>
+                    Name <span className=' text-fontRed'>*</span>
+                  </label>
+                  <input
+                    autoComplete='true'
+                    onChange={(e) => setName(e.target.value)}
+                    name='name'
+                    type='text'
+                    maxLength={40}
+                    className=' h-[48px] px-4 py-[12px] bg-whiteBg __input_auth focus:outline-none text-[16px] leading-[24px] text-font5'
+                  />
+                </div>
+              ) : (
+                ''
+              )}
               <div className=' flex flex-col gap-[6px]'>
-                <label htmlFor='name'>
-                  Name <span className=' text-fontRed'>*</span>
+                <label htmlFor='email'>
+                  Email <span className=' text-fontRed'>*</span>
                 </label>
                 <input
                   autoComplete='true'
-                  onChange={(e) => setName(e.target.value)}
-                  name='name'
+                  onChange={(e) => setEmail(e.target.value)}
+                  name='email'
                   type='text'
                   maxLength={40}
                   className=' h-[48px] px-4 py-[12px] bg-whiteBg __input_auth focus:outline-none text-[16px] leading-[24px] text-font5'
                 />
               </div>
-            ) : (
-              ''
-            )}
-            <div className=' flex flex-col gap-[6px]'>
-              <label htmlFor='email'>
-                Email <span className=' text-fontRed'>*</span>
-              </label>
-              <input
-                autoComplete='true'
-                onChange={(e) => setEmail(e.target.value)}
-                name='email'
-                type='text'
-                maxLength={40}
-                className=' h-[48px] px-4 py-[12px] bg-whiteBg __input_auth focus:outline-none text-[16px] leading-[24px] text-font5'
-              />
-            </div>
-            <div className=' flex flex-col gap-[6px]'>
-              <label htmlFor='password'>
-                Password <span className=' text-fontRed'>*</span>
-              </label>
-              <input
-                onChange={(e) => setPassword(e.target.value)}
-                autoComplete='true'
-                name='password'
-                type='password'
-                maxLength={40}
-                className=' h-[48px] px-4 py-[12px] bg-whiteBg __input_auth focus:outline-none text-[16px] leading-[24px] text-font5'
-              />
-            </div>
-            {type === 'register' ? (
               <div className=' flex flex-col gap-[6px]'>
-                <label htmlFor='password_confirmation'>
+                <label htmlFor='password'>
                   Password <span className=' text-fontRed'>*</span>
                 </label>
                 <input
-                  onChange={(e) => setPassword_confirmation(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                   autoComplete='true'
-                  name='password_confirmation'
+                  name='password'
                   type='password'
                   maxLength={40}
                   className=' h-[48px] px-4 py-[12px] bg-whiteBg __input_auth focus:outline-none text-[16px] leading-[24px] text-font5'
                 />
               </div>
-            ) : (
-              ''
-            )}
-            <button className=' flex justify-center items-center py-[1.6rem] leading-6 text-font2 bg-font3 __input_auth mt-[2.4rem]'>
-              {type === 'register' ? 'Sign up' : 'Sign In'}
-            </button>
-            <p className='text-font5 leading-[24px] mb-9'>
               {type === 'register' ? (
-                <Link to='/sign-in'>
-                  Already have an account?
-                  <span className=' underline'> Login here.</span>
-                </Link>
+                <div className=' flex flex-col gap-[6px]'>
+                  <label htmlFor='password_confirmation'>
+                    Password <span className=' text-fontRed'>*</span>
+                  </label>
+                  <input
+                    onChange={(e) => setPassword_confirmation(e.target.value)}
+                    autoComplete='true'
+                    name='password_confirmation'
+                    type='password'
+                    maxLength={40}
+                    className=' h-[48px] px-4 py-[12px] bg-whiteBg __input_auth focus:outline-none text-[16px] leading-[24px] text-font5'
+                  />
+                </div>
               ) : (
-                <Link to='/register'>
-                  Create an account?
-                  <span className=' underline'> Signup here.</span>
-                </Link>
+                ''
               )}
-            </p>
-          </form>
+              <button className=' flex justify-center items-center py-[1.6rem] leading-6 text-font2 bg-font3 __input_auth mt-[2.4rem]'>
+                {type === 'register' ? 'Sign up' : 'Sign In'}
+              </button>
+              <p className='text-font5 leading-[24px] mb-9'>
+                {type === 'register' ? (
+                  <Link to='/sign-in'>
+                    Already have an account?
+                    <span className=' underline'> Login here.</span>
+                  </Link>
+                ) : (
+                  <Link to='/register'>
+                    Create an account?
+                    <span className=' underline'> Signup here.</span>
+                  </Link>
+                )}
+              </p>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -8,16 +8,19 @@ import axios from 'axios';
 import Recommended from './Recommended';
 import { useProductContext } from '../../../contexts/product/productContext';
 import { useNavigate } from 'react-router-dom';
+import { useFeatureContext } from '../../../contexts/feature/FeatureContext';
 
 const Featured = () => {
   // const percentage = percentageCal(14, 20) + '%';
 
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const { addToCart } = useProductContext();
+  const { setIsLoading } = useFeatureContext();
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const getProducts = async () => {
+    setIsLoading(true);
     await axios
       .get(`${apiUrl}/rank`)
       .then((data) => {
@@ -26,6 +29,7 @@ const Featured = () => {
       .catch((err) => {
         console.log(err);
       });
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -70,7 +74,12 @@ const Featured = () => {
               />
             </div>
             <div className='flex justify-center items-center max-w-[16.5rem] h-auto '>
-              <img width={160} src={featuredProducts[0]?.images[0]?.url} />
+              <img
+                width={160}
+                height={160}
+                alt='img'
+                src={featuredProducts[0]?.images[0]?.url}
+              />
             </div>
           </div>
         </div>
@@ -109,7 +118,7 @@ const Featured = () => {
         />
       </section>
       <section className='flex sm:flex-col mt-[6.8rem]'>
-        <div className='h-[532px] sm:h-auto w-[36.4rem] bg-whiteBg __shadow rounded-[1rem] p-[3.2rem] sm:p-[1.6rem] pt-[9.6rem] sm:pt-[3.2rem] mr-[3rem] sm:mr-0 flex '>
+        <div className='h-[532px] sm:h-auto w-[36.4rem] bg-whiteBg __shadow rounded-[1rem] p-[3.2rem] sm:p-[1.6rem] pt-[9.6rem] sm:pt-[2.4rem] mr-[3rem] sm:mr-0 flex '>
           <div className='self-end'>
             <img
               src={featuredProducts[3]?.images[0]?.url}
@@ -119,7 +128,7 @@ const Featured = () => {
             />
           </div>
         </div>
-        <div className=' flex flex-col w-[40rem] sm:w-full self-end '>
+        <div className=' flex flex-col w-[40rem] sm:w-full self-end sm:py-6 '>
           <h1 className='max-w-[29.4rem] font-clash600 text-[4.8rem] sm:text-[3.2rem] leading-[5.9rem]  sm:leading-[4rem] text-font3'>
             {featuredProducts[3]?.name}
           </h1>
@@ -183,7 +192,7 @@ const Marketing = ({ icon, heading, text }) => {
   return (
     <section className=' flex gap-[3.2rem] justify-center items-center'>
       <div className=' w-[4.8rem] h-[4.8rem] rounded-[50%] bg-green2 flex justify-center items-center'>
-        <img className='' src={icon} width={20} height={20} />
+        <img src={icon} width={20} height={20} alt='icon' />
       </div>
 
       <div className=' flex flex-col gap-[.8rem]'>

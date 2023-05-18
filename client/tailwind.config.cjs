@@ -23,13 +23,10 @@ module.exports = {
       fontRed: '#DE2D14',
     },
     screens: {
-      sm: { min: '0px', max: '767px' },
-
-      md: { min: '768px', max: '1023px' },
-
+      sm: { min: '0px', max: '1000px' },
       lg: { min: '1024px', max: '1280px' },
-
-      xl: { min: '1281px' },
+      xl: { min: '1281px', max: '1460px' },
+      xxl: { min: '1461px' },
     },
 
     extend: {},
