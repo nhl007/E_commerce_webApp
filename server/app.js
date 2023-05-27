@@ -16,12 +16,7 @@ const app = express();
 
 //!middleware
 
-const whitelist = [
-  'http://localhost:5173',
-  'https://localhost:5173',
-  'http://localhost:3000',
-  process.env.WHITELIST,
-];
+const whitelist = process.env.WHITELIST.split(',');
 
 const corsOptions = {
   credentials: true,
@@ -43,9 +38,9 @@ app.use(cookieParser());
 //!routes
 app.get('/', (req, res) => {
   res.send({
-    projectName: 'E_Commerce',
-    Author: 'Asif Nihal',
-    message: 'hello from the server :',
+    projectName: 'E_Commerce_RestAPI',
+    Owner: 'Asif Nihal',
+    description: 'Powering the E-com FrontEnt',
   });
 });
 

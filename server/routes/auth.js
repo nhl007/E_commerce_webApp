@@ -36,4 +36,5 @@ router
   .get(protectRoutes, authorizeRole('admin'), getUserDetails)
   .put(protectRoutes, authorizeRole('admin'), updateUserProfile)
   .delete(protectRoutes, authorizeRole('admin'), deleteUser);
+  
 module.exports = router;

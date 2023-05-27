@@ -1,7 +1,7 @@
 {
-  "name": "e_commerce_webapp",
+  "name": "e_commerce_web_api",
   "version": "1.0.0",
-  "description": "Designed by Sadzan Rahin and developed by Asif Nihal",
+  "description": "E_Commerce_Web_Api || Developed by Asif Nihal",
   "scripts": {
     "server": "npm start --prefix server",
     "client": "npm run dev --prefix client",
