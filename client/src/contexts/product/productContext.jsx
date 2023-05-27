@@ -6,6 +6,7 @@ import {
   // ADMIN_DELETE_PRODUCT,
   SET_ALL_PRODUCTS,
   SET_CURRENT_PRODUCT,
+  SET_FEATURED_PRODUCTS,
   UPDATE_CART,
 } from './actions';
 import useLocalStorage from '../../hooks/useLocalStorage';
@@ -18,8 +19,8 @@ const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 const initialState = {
   products: [],
+  featuredProducts: [],
   currentProduct: null,
-  // currentProductReviews: [],
   cart: cart ? cart : [],
   totalCartProducts: cart.length ? cart.length : 0,
   totalProducts: 0,
@@ -44,21 +45,34 @@ const initialState = {
 };
 
 const ProductProvider = ({ children }) => {
-  const navigate = useNavigate();
-
-  const [state, dispatch] = useReducer(reducer, initialState);
   const apiUrl = import.meta.env.VITE_API_URL;
+  const navigate = useNavigate();
   const config = {
     withCredentials: true,
     credentials: 'include',
   };
 
+  const [state, dispatch] = useReducer(reducer, initialState);
   const [cart, setCart] = useLocalStorage('cart', state.cart);
-  const { displayAlert } = useFeatureContext();
+  const { displayAlert, setIsLoading } = useFeatureContext();
 
-  // useEffect(() => {
-  //   getAllProducts();
-  // }, []);
+  const getFeaturedProducts = async () => {
+    setIsLoading(true);
+    await axios
+      .get(`${apiUrl}/rank`)
+      .then((data) => {
+        dispatch({
+          type: SET_FEATURED_PRODUCTS,
+          payload: {
+            products: data.data.products,
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setIsLoading(false);
+  };
 
   const addToCart = (id) => {
     if (!state.cart.length) {
@@ -227,6 +241,7 @@ const ProductProvider = ({ children }) => {
         addToCart,
         removeFromCart,
         getAllProducts,
+        getFeaturedProducts,
         getASingleProduct,
         adminDeleteAProduct,
         createNewProduct,

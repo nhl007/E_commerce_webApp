@@ -18,7 +18,7 @@ const AllProducts = () => {
       </h1>
 
       <div className=' grid sm:flex grid-flow-row grid-cols-4 gap-x-[3rem] gap-y-[5rem] sm:gap-[1.6rem] sm:overflow-x-scroll'>
-        {products?.map((p, index) => {
+        {products.map((p, index) => {
           return (
             <Card
               key={index}
