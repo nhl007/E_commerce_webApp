@@ -5,6 +5,9 @@
   "scripts": {
     "server": "npm start --prefix server",
     "client": "npm run dev --prefix client",
+    "serverI": "npm install --prefix server",
+    "clientI": "npm install --prefix client",
+    "installDeps": "npm run serverI &&  npm run clientI",
     "start": "concurrently --kill-others-on-fail \" npm run server\" \" npm run client\""
   },
   "keywords": [],

@@ -1,9 +1,15 @@
-# Ecomerce application with social_media_optional
+# E-Commerce Web Application
 
-# author: Asif Nihal
+# Project owner : Asif Nihal
+
+# Tech Stack : M E R N
+
+# \*clone the repo
+
+# \*npm run installDeps
+
+# \*npm start
 
 # Case Study of this app .... ⬇⬇⬇
 
-this app is made with mearn stack
-
-loading...
+# Loading...
