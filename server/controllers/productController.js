@@ -134,7 +134,7 @@ exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
 
   const rankingModel = await Ranking.findOne({ product: product._id });
 
-  rankingModel.remove();
+  await rankingModel.remove();
 
   await product.remove();
 
